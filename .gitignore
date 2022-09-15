@@ -1,23 +1,9 @@
 # Dependency directories
-/**/node_modules/
-/**/package-lock.json
+/node_modules
 
 # IDE
 /.idea/
 /.vscode/
 
 # Misc
-/**/_backstage
-/**/debug.log
-
-# Misc
-/**/Thumbs.db
 /**/*.DS_Store
-/**/.env.local
-/**/.env.development.local
-/**/.env.test.local
-/**/.env.production.local
-
-/**/npm-debug.log*
-/**/yarn-debug.log*
-/**/yarn-error.log*
