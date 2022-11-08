@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
+// noinspection JSVoidFunctionReturnValueUsed
 
-const connectDB = () => {
+import mongoose, { CallbackWithoutResult } from 'mongoose';
+
+const connectDB = (uri: string, callback: CallbackWithoutResult) => {
   /*
    Connect to MongoDB
 
@@ -9,7 +11,7 @@ const connectDB = () => {
    * Then you should create an asynchronous function.
    */
   mongoose
-    .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+    .connect((process.env.MONGO_URI as string), ({ useNewUrlParser: true } as object))
     .then((connection) => console.log(`MongoDB Connected: ${connection.connection.host}`.cyan.underline))
     .catch((error) => console.log(`Error: ${error.message}`.red));
 }

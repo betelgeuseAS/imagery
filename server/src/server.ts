@@ -1,6 +1,7 @@
-const path = require('path');
-const express = require('express');
+import path from 'path';
+import express, { Application } from 'express';
 const cors = require('cors');
+import Color from 'colors';
 const colors = require('colors');
 const dotenv = require('dotenv').config();
 
@@ -8,11 +9,11 @@ const { errorHandler } = require('./middleware/error');
 
 const connectDB = require('./config/db');
 
-const Users = require("./routes/users");
-const Goals = require("./routes/goals");
+const Users = require('./routes/users');
+const Goals = require('./routes/goals');
 
 const port = process.env.PORT || 5000;
-const app = express();
+const app: Application = express();
 
 app.use(cors()); // CORS (Cross-Origin Resource Sharing)
 app.use(express.json()); // * Such as bodyParser.json() "body-parser" middleware.
@@ -21,8 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 connectDB();
 
 // Routes
-app.use("/api/users", Users);
-app.use("/api/goals", Goals);
+app.use('/api/users', Users);
+app.use('/api/goals', Goals);
 
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
