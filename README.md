@@ -19,7 +19,7 @@ npm run client
 ```
 
 ### Frontend
-The backend uses [React](https://reactjs.org/) and [Redux](https://redux.js.org/).  
+The backend uses [React](https://reactjs.org/) and [Redux](https://redux.js.org/) (Created by [Create React App](https://create-react-app.dev/)).  
 Also [Tailwind CSS](https://tailwindcss.com/) for styles.
 
 ### Backend
