@@ -1,9 +1,9 @@
-const express = require('express')
+import express from 'express'
 
 const { registerUser, loginUser, getMe } = require('../controllers/user')
 const { protect } = require('../middleware/auth')
 
-const router = express.Router()
+const router: express.Router = express.Router()
 
 router.post('/register', registerUser) // * POST /api/users/register
 router.post('/login', loginUser) // * POST /api/users/login
