@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 
-function App() {
+export const App = (): JSX.Element => {
   return (
     <>
       <Router>
@@ -28,5 +28,3 @@ function App() {
     </>
   )
 }
-
-export default App
