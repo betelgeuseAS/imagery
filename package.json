@@ -1,7 +1,7 @@
 {
-  "name": "book-coffee-wine",
+  "name": "imagery",
   "version": "1.0.0",
-  "description": "Book Coffee Wine",
+  "description": "Software for writing books",
   "private": true,
   "author": "Andrew Samchuk",
   "license": "MIT",
@@ -12,6 +12,6 @@
     "postinstall": "(cd ./server && npm install) && (cd ../client && npm install)"
   },
   "devDependencies": {
-    "concurrently": "^7.4.0"
+    "concurrently": "^8.2.0"
   }
 }
