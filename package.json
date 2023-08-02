@@ -5,13 +5,20 @@
   "private": true,
   "author": "Andrew Samchuk",
   "license": "MIT",
+  "productName": "Imagery",
+  "main": "electron/electron_v2.js",
+  "homepage": "./",
   "scripts": {
     "server": "npm run start --prefix server",
     "client": "npm run start --prefix client",
-    "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,blue\" --kill-others \"npm run server\" \"npm run client\"",
+    "start:web:dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,blue\" --kill-others \"npm run server\" \"npm run client\"",
+    "start:electron:dev": "electron ./ --serve",
     "postinstall": "(cd ./server && npm install) && (cd ../client && npm install)"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "dotenv": "^16.3.1",
+    "electron": "^25.3.2",
+    "electron-builder": "^24.6.3"
   }
 }
