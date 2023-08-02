@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Server (back-end) side",
+  "description": "Server (Back-end) side",
   "author": "Andrew Samchuk",
   "license": "MIT",
   "main": "server.js",
