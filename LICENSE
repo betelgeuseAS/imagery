@@ -1,0 +1,28 @@
+CLOSED-SOURCE SOFTWARE LICENSE AGREEMENT
+
+This Closed-Source Software License Agreement (the "Agreement") is entered into between the individual or entity that downloads, accesses, or uses the software ("Licensee") and Andrew Samchuk, with its principal place of business at Ukraine ("Licensor").
+
+1. DEFINITIONS
+   1.1 "Software" refers to the computer program, including all related files, documentation, and any updates or modifications provided by Licensor.
+
+2. GRANT OF LICENSE
+   2.1 Subject to the terms and conditions of this Agreement, Licensor hereby grants Licensee a non-exclusive, non-transferable license to use the Software for its intended purpose solely in connection with the project hosted at https://github.com/betelgeuseAS/imagery ("Project").
+   2.2 Licensee shall not sublicense, distribute, rent, lease, loan, or otherwise transfer the Software or any rights therein to any third party without prior written consent from Licensor.
+
+3. INTELLECTUAL PROPERTY
+   3.1 Licensee acknowledges that all intellectual property rights, including but not limited to copyrights, trademarks, and trade secrets, related to the Software and any modifications or derivative works thereof, are owned by Licensor.
+   3.2 Licensee shall not reverse engineer, decompile, disassemble, or attempt to discover the source code of the Software.
+
+4. CONFIDENTIALITY
+   4.1 Licensee agrees to maintain the confidentiality of the Software and any proprietary information provided by Licensor.
+
+5. WARRANTY DISCLAIMER
+   5.1 The Software is provided "as is" without warranty of any kind, either express or implied, including but not limited to the implied warranties of merchantability and fitness for a particular purpose.
+   5.2 Licensor shall not be liable for any damages, including but not limited to direct, indirect, incidental, special, or consequential damages, arising out of the use or inability to use the Software.
+
+6. TERMINATION
+   6.1 This Agreement is effective upon Licensee's use of the Software and will continue until terminated. Licensor may terminate this Agreement immediately if Licensee breaches any provision.
+   6.2 Upon termination, Licensee shall cease all use of the Software and destroy any copies in its possession.
+
+7. GOVERNING LAW
+   7.1 This Agreement shall be governed by and construed in accordance with the laws of Ukraine. Any disputes arising under or in connection with this Agreement shall be subject to the exclusive jurisdiction of the courts of Constitution of Ukraine.
