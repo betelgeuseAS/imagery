@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "Client (front-end) side",
+  "description": "Client (Front-end) side",
   "author": "Andrew Samchuk",
   "license": "MIT",
   "proxy": "http://localhost:5000",

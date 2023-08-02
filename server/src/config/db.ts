@@ -1,8 +1,8 @@
 // noinspection JSVoidFunctionReturnValueUsed
 
-import mongoose, { CallbackWithoutResult } from 'mongoose';
+import mongoose, { CallbackWithoutResult, Mongoose } from 'mongoose';
 
-const connectDB = (uri: string, callback: CallbackWithoutResult) => {
+const connectDB = (uri?: string, callback?: CallbackWithoutResult) => {
   /*
    Connect to MongoDB
 
@@ -12,7 +12,7 @@ const connectDB = (uri: string, callback: CallbackWithoutResult) => {
    */
   mongoose
     .connect((process.env.MONGO_URI as string), ({ useNewUrlParser: true } as object))
-    .then((connection) => console.log(`MongoDB Connected: ${connection.connection.host}`.cyan.underline))
+    .then((connection: Mongoose) => console.log(`MongoDB Connected: ${connection.connection?.host}`.cyan.underline))
     .catch((error) => console.log(`Error: ${error.message}`.red));
 }
 
