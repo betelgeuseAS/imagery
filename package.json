@@ -4,7 +4,7 @@
   "description": "Software for writing books",
   "private": true,
   "author": "Andrew Samchuk",
-  "license": "MIT",
+  "license": "Closed Source",
   "productName": "Imagery",
   "main": "electron/electron_v2.js",
   "homepage": "./",
@@ -13,12 +13,9 @@
     "client": "npm run start --prefix client",
     "start:web:dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,blue\" --kill-others \"npm run server\" \"npm run client\"",
     "start:electron:dev": "electron ./ --serve",
-    "postinstall": "(cd ./server && npm install) && (cd ../client && npm install)"
+    "postinstall": "(cd ./electron && npm install) && (cd ./server && npm install) && (cd ../client && npm install)"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
-    "dotenv": "^16.3.1",
-    "electron": "^25.3.2",
-    "electron-builder": "^24.6.3"
+    "concurrently": "^8.2.0"
   }
 }
