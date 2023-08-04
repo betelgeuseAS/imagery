@@ -1,23 +1,23 @@
 {
   "name": "imagery",
   "version": "1.0.0",
-  "description": "Electron side",
+  "description": "Electron (Software) side",
   "private": true,
   "author": "Andrew Samchuk",
   "license": "Closed Source",
   "productName": "Imagery",
   "main": "build/src/app.js",
   "scripts": {
-    "electron:tsc": "tsc",
-    "electron:start": "npm run electron:tsc && electron ./ --serve"
+    "start": "npm run build && electron ./ --serve",
+    "build": "tsc"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "typescript": "^5.1.6"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
     "concurrently": "^8.2.0",
-    "dotenv": "^16.3.1",
     "electron": "^25.3.2",
     "electron-builder": "^24.6.3"
   }

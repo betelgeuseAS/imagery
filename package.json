@@ -11,11 +11,15 @@
   "scripts": {
     "server": "npm run start --prefix server",
     "client": "npm run start --prefix client",
-    "start:web:dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,blue\" --kill-others \"npm run server\" \"npm run client\"",
-    "start:electron:dev": "electron ./ --serve",
+    "electron": "npm run start --prefix electron",
+    "web:dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,blue\" --kill-others \"npm run server\" \"npm run client\"",
+    "electron:dev": "wait-on http-get://127.0.0.1:3000/ && npm run electron",
+    "start": "npm-run-all -p web:dev electron:dev",
     "postinstall": "(cd ./electron && npm install) && (cd ./server && npm install) && (cd ../client && npm install)"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "npm-run-all": "^4.1.5",
+    "wait-on": "^7.0.1"
   }
 }
