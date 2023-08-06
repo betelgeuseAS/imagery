@@ -13,6 +13,10 @@ ____
 ```terminal
 # Install dependencies
 npm install
+# Or
+npm install --legacy-peer-deps
+# Or
+npm install --force
 
 # Run server development
 npm run server
@@ -20,12 +24,17 @@ npm run server
 # Run client development
 npm run client
 
-# Run web development
-npm run start:web:dev
-
 # Run electron development
-npm run start:web:dev
-npm run start:electron:dev
+npm run electron
+
+# Run web (client & server) development
+npm run web:dev
+
+# Run electron development with waiting host
+npm run electron:dev
+
+# Run app (web & electron) development
+npm start
 ```
 
 ## Tech Stack
