@@ -1,6 +1,7 @@
 # Imagery - client (Front-end) side
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started), using:
+
 - [React](https://react.dev/)
 - [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -41,3 +42,21 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+### `npm run lint`
+
+Automatically check and enforce coding style and formatting standards in project's codebase. It runs a linter, which is a tool that analyzes code for potential issues or violations of coding conventions, helping to maintain consistent and readable code.
+
+See the [ESLint](https://eslint.org/) for more information.
+
+### `npm run lint:fix`
+
+Automatically fix coding style and formatting issues in codebase by running the linter and applying fixes where possible.
+
+See the [ESLint](https://eslint.org/) for more information.
+
+### `npm run prettier`
+
+Triggers the Prettier code formatting tool configured in project, which automatically formats code according to a set of defined style rules, improving its consistency and readability.
+
+See the [Prettier](https://prettier.io/) for more information.

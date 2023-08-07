@@ -9,7 +9,7 @@ import Spinner from '../components/Spinner'
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    password: ''
   })
 
   const { email, password } = formData
@@ -36,7 +36,7 @@ function Login() {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }))
   }
 
@@ -45,7 +45,7 @@ function Login() {
 
     const userData = {
       email,
-      password,
+      password
     }
 
     dispatch(login(userData))

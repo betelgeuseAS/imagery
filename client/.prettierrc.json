@@ -2,7 +2,7 @@
   "arrowParens": "always",
   "bracketSameLine": true,
   "bracketSpacing": true,
-  "endOfLine":"auto",
+  "endOfLine": "auto",
   "singleQuote": true,
   "jsxSingleQuote": true,
   "trailingComma": "none",
