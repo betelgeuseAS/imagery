@@ -9,7 +9,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: ''
 }
 
 // Register user
@@ -56,7 +56,7 @@ export const authSlice = createSlice({
       state.isSuccess = false
       state.isError = false
       state.message = ''
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -91,7 +91,7 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null
       })
-  },
+  }
 })
 
 export const { reset } = authSlice.actions
