@@ -7,6 +7,9 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --write .",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,7 +31,13 @@
     "@types/express": "^4.17.17",
     "@types/mongodb": "^4.0.6",
     "@types/node": "^20.4.6",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "nodemon": "^3.0.1",
+    "prettier": "^3.0.1",
     "ts-node": "^10.9.1"
   }
 }
