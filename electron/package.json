@@ -9,6 +9,9 @@
   "main": "build/src/app.js",
   "scripts": {
     "start": "npm run build && electron ./ --serve",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --write .",
     "build": "tsc"
   },
   "dependencies": {
@@ -17,8 +20,14 @@
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
     "concurrently": "^8.2.0",
     "electron": "^25.3.2",
-    "electron-builder": "^24.6.3"
+    "electron-builder": "^24.6.3",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.1"
   }
 }
