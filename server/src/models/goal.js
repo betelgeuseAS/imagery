@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const mongoose = require('mongoose')
 
 const goalSchema = mongoose.Schema(
