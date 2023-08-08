@@ -3,7 +3,7 @@ import { BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 
-require('dotenv').config()
+import 'dotenv/config'
 
 import { CLIENT } from '../constants'
 
@@ -66,7 +66,11 @@ export class Main {
     }
   }
 
-  static main(app: Electron.App, screen: Electron.Screen, browserWindow: typeof BrowserWindow) {
+  static main(
+    app: Electron.App,
+    screen: Electron.Screen,
+    browserWindow: typeof BrowserWindow
+  ) {
     const args = process.argv.slice(1)
 
     Main.serve = args.some((value: string) => value === '--serve')
