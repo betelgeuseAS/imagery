@@ -36,4 +36,3 @@ See the [ESLint](https://eslint.org/) for more information.
 Triggers the Prettier code formatting tool configured in project, which automatically formats code according to a set of defined style rules, improving its consistency and readability.
 
 See the [Prettier](https://prettier.io/) for more information.
-
