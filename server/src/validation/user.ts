@@ -4,12 +4,12 @@ const Validator = require('validator')
 const isEmpty = require('is-empty')
 
 export const validateRegister = (data: any) => {
-  const errors = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  }
+  const errors: {
+    name?: string
+    email?: string
+    password?: string
+    confirmPassword?: string
+  } = {}
 
   // Name checks
   if (Validator.isEmpty(data.name)) errors.name = 'Name field is required'
@@ -36,10 +36,7 @@ export const validateRegister = (data: any) => {
 }
 
 export const validateLogin = (data: any) => {
-  const errors = {
-    email: '',
-    password: ''
-  }
+  const errors: { email?: string; password?: string } = {}
 
   // Email checks
   if (Validator.isEmpty(data.email)) {

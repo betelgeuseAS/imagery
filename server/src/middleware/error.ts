@@ -1,11 +1,6 @@
-import { Request, Response } from 'express'
+import { TErrorHandler } from '../types/handlers'
 
-const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response
-  // next: NextFunction
-) => {
+export const errorHandler: TErrorHandler = (err, req, res) => {
   const statusCode = res.statusCode ? res.statusCode : 500
 
   res.status(statusCode)
@@ -15,5 +10,3 @@ const errorHandler = (
     stack: process.env.NODE_ENV === 'production' ? null : err.stack
   })
 }
-
-export { errorHandler }

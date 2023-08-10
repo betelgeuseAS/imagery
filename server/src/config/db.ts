@@ -1,6 +1,6 @@
 import mongoose, { Mongoose } from 'mongoose'
 
-const connectDB = () => {
+export const connectDB = () => {
   /*
    Connect to MongoDB
 
@@ -20,5 +20,3 @@ const connectDB = () => {
     )
     .catch((error) => console.log(`Error: ${error.message}`.red))
 }
-
-module.exports = connectDB
