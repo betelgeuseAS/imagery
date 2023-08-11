@@ -21,7 +21,6 @@ connectDB()
 
 // Routes
 app.use('/api/users', Users)
-// app.use('/api/goals', Goals)
 
 // Serve Frontend
 // if (process.env.NODE_ENV === 'production') {

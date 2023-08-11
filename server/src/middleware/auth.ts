@@ -5,7 +5,7 @@ import { TExpressHandler } from '../types/handlers'
 import User from '../models/user'
 
 export const protect: TExpressHandler = asyncHandler(async (req, res, next) => {
-  let token
+  let token: string = ''
 
   if (
     req.headers.authorization &&
@@ -14,9 +14,8 @@ export const protect: TExpressHandler = asyncHandler(async (req, res, next) => {
     try {
       token = req.headers.authorization.split(' ')[1] // Get token from header
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET) // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) // Verify token
 
-      // req.user = await User.findById(decoded.id).select('-password') // Get user from the token
       req.body.user = await User.findById(decoded.id).select('-password') // Get user from the token
 
       next()

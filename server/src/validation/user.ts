@@ -26,9 +26,8 @@ export const validateRegister = (data: any) => {
     errors.password = 'Password field is required'
   if (Validator.isEmpty(data.confirmPassword))
     errors.confirmPassword = 'Confirm password field is required'
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+  if (!Validator.isLength(data.password, { min: 6, max: 30 }))
     errors.password = 'Password must be at least 6 characters'
-  }
   if (!Validator.equals(data.password, data.confirmPassword))
     errors.confirmPassword = 'Passwords must match'
 
@@ -52,4 +51,4 @@ export const validateLogin = (data: any) => {
   return { errors, isValid: isEmpty(errors) }
 }
 
-module.exports = { validateRegister, validateLogin }
+export default { validateRegister, validateLogin }

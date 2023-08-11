@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, model } from 'mongoose'
 
 import { IUser } from '../types/models'
 
-const userSchema = new Schema<IUser>(
+const userSchema: mongoose.Schema = new Schema<IUser>(
   {
     name: {
       type: String,

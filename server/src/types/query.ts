@@ -1,5 +1,5 @@
-import { Request } from 'express'
+import { IUser } from './models'
 
-export interface IGetUserAuthInfoRequest extends Request {
-  user: object
+export interface IUserInfoRequest extends Express.Request {
+  user: IUser
 }

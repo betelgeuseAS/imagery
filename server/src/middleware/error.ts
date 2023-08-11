@@ -1,7 +1,7 @@
 import { TErrorHandler } from '../types/handlers'
 
 export const errorHandler: TErrorHandler = (err, req, res) => {
-  const statusCode = res.statusCode ? res.statusCode : 500
+  const statusCode: number = res.statusCode ? res.statusCode : 500
 
   res.status(statusCode)
 

@@ -28,14 +28,18 @@ export const registerUser: TExpressHandler = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10)
   const hashedPassword = await bcrypt.hash(password, salt)
 
-  const user = await User.create({ name, email, password: hashedPassword }) // Create user
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword
+  }) // Create user
 
   if (user) {
     res.status(201).json({
-      _id: user.id,
+      _id: user._id,
       name: user.name,
       email: user.email,
-      token: generateToken(user._id)
+      token: generateToken(user._id || '')
     })
   } else {
     res.status(400).json('Invalid user data')
@@ -48,6 +52,8 @@ export const registerUser: TExpressHandler = asyncHandler(async (req, res) => {
  * @access Public
  */
 export const loginUser: TExpressHandler = asyncHandler(async (req, res) => {
+  console.log('>>> req.body: ', req.body)
+
   const { errors, isValid } = validateLogin(req.body)
 
   if (!isValid) res.status(400).json(errors)
@@ -73,7 +79,6 @@ export const loginUser: TExpressHandler = asyncHandler(async (req, res) => {
  * @access Private
  */
 export const getMe: TExpressHandler = asyncHandler(async (req, res) => {
-  // res.status(200).json(req.user)
   res.status(200).json(req.body?.user)
 })
 

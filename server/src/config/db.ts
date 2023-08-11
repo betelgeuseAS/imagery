@@ -1,6 +1,6 @@
 import mongoose, { Mongoose } from 'mongoose'
 
-export const connectDB = () => {
+export const connectDB = (): void => {
   /*
    Connect to MongoDB
 
@@ -18,5 +18,5 @@ export const connectDB = () => {
         `MongoDB Connected: ${connection.connection?.host}`.cyan.underline
       )
     )
-    .catch((error) => console.log(`Error: ${error.message}`.red))
+    .catch((error: Error) => console.log(`Error: ${error.message}`.red))
 }
