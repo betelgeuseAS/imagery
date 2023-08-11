@@ -5,8 +5,6 @@
   "private": true,
   "author": "Andrew Samchuk",
   "license": "Closed Source",
-  "productName": "Imagery",
-  "main": "electron/electron_v2.js",
   "homepage": "./",
   "scripts": {
     "server:start": "npm run start --prefix server",
