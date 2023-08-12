@@ -25,6 +25,10 @@
     "client:prettier": "npm run prettier --prefix client",
     "electron:prettier": "npm run prettier --prefix electron",
     "prettier": "npm run server:prettier && npm run client:prettier && npm run electron:prettier",
+    "server:prettier:fix": "npm run prettier:fix --prefix server",
+    "client:prettier:fix": "npm run prettier:fix --prefix client",
+    "electron:prettier:fix": "npm run prettier:fix --prefix electron",
+    "prettier:fix": "npm run server:prettier:fix && npm run client:prettier:fix && npm run electron:prettier:fix",
     "postinstall": "(cd ./electron && npm install) && (cd ./server && npm install) && (cd ../client && npm install)"
   },
   "devDependencies": {

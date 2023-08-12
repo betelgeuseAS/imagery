@@ -9,9 +9,10 @@
     "start": "nodemon",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prettier": "prettier --write .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc --build"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

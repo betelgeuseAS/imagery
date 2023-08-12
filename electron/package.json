@@ -11,9 +11,10 @@
     "start": "npm run build && electron ./ --serve",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prettier": "prettier --write .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc --build"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

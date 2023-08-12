@@ -9,7 +9,8 @@
     "start": "react-scripts start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prettier": "prettier --write .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "test": "react-scripts test",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
