@@ -2,8 +2,11 @@
 /node_modules
 
 # IDE
-/.idea/
-/.vscode/
+/.idea
+/.vscode
 
 # Misc
 /**/*.DS_Store
+
+# Temporary
+/tmp
