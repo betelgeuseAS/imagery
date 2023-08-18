@@ -1,4 +1,5 @@
 import mongoose, { Model, Document } from 'mongoose'
+
 import { toJSON } from '.'
 
 interface SampleSchema {

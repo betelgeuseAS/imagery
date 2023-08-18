@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import setupTestDB from '../jest/setupTestDB'
 import { toJSON } from '../toJSON'
 import paginate from './paginate'

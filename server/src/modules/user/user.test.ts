@@ -4,6 +4,7 @@ import request from 'supertest'
 import { faker } from '@faker-js/faker'
 import httpStatus from 'http-status'
 import moment from 'moment'
+
 import config from '../../config/config'
 import tokenTypes from '../token/token.types'
 import * as tokenService from '../token/token.service'

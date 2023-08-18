@@ -1,5 +1,6 @@
 import httpStatus from 'http-status'
 import mongoose from 'mongoose'
+
 import User from './user.model'
 import ApiError from '../errors/ApiError'
 import { IOptions, QueryResult } from '../paginate/paginate'

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import moment, { Moment } from 'moment'
 import mongoose from 'mongoose'
+
 import httpStatus from 'http-status'
 import config from '../../config/config'
 import Token from './token.model'

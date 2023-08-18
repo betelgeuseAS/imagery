@@ -1,5 +1,6 @@
 import morgan from 'morgan'
 import { Request, Response } from 'express'
+
 import config from '../../config/config'
 import logger from './logger'
 

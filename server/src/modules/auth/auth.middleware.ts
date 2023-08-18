@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import passport from 'passport'
 import httpStatus from 'http-status'
+
 import ApiError from '../errors/ApiError'
 import { roleRights } from '../../config/roles'
 import { IUserDoc } from '../user/user.interfaces'

@@ -1,5 +1,6 @@
 import httpStatus from 'http-status'
 import mongoose from 'mongoose'
+
 import Token from '../token/token.model'
 import ApiError from '../errors/ApiError'
 import tokenTypes from '../token/token.types'

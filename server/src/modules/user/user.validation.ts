@@ -1,4 +1,5 @@
 import Joi from 'joi'
+
 import { password, objectId } from '../validate/custom.validation'
 import { NewCreatedUser } from './user.interfaces'
 

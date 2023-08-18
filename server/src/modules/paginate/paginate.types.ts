@@ -1,4 +1,5 @@
 import { Model, Document } from 'mongoose'
+
 import { QueryResult, IOptions } from './paginate'
 
 export interface IProject {

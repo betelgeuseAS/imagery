@@ -1,4 +1,5 @@
 import mongoose, { Model, Document } from 'mongoose'
+
 import { QueryResult } from '../paginate/paginate'
 import { AccessAndRefreshTokens } from '../token/token.interfaces'
 

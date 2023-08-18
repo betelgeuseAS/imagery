@@ -1,5 +1,6 @@
 import httpStatus from 'http-status'
 import { Request, Response } from 'express'
+
 import catchAsync from '../utils/catchAsync'
 import { tokenService } from '../token'
 import { userService } from '../user'

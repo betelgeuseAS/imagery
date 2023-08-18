@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+
 import config from '../../config/config'
 import logger from '../logger/logger'
 import { Message } from './email.interfaces'
@@ -104,7 +105,7 @@ export const sendSuccessfulRegistration = async (
   // replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`
   const text = `Hi ${name},
-  Congratulations! Your account has been created. 
+  Congratulations! Your account has been created.
   You are almost there. Complete the final step by verifying your email at: ${verificationEmailUrl}
   Don't hesitate to contact us if you face any problems
   Regards,
@@ -132,7 +133,7 @@ export const sendAccountCreated = async (
   // replace this url with the link to the email verification page of your front-end app
   const loginUrl = `http://${config.clientUrl}/auth/login`
   const text = `Hi ${name},
-  Congratulations! Your account has been created successfully. 
+  Congratulations! Your account has been created successfully.
   You can now login at: ${loginUrl}
   Don't hesitate to contact us if you face any problems
   Regards,

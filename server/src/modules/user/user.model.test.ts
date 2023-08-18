@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+
 import { NewCreatedUser } from './user.interfaces'
 import User from './user.model'
 
