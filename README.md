@@ -64,3 +64,18 @@ MONGO_URI = mongodb://127.0.0.1:27017/imagery
 ```
 
 The database and collections are created automatically when the project is launched, if they are specified in the models and do not already exist.
+
+## Future changes
+- **CI**: continuous integration with [GitHub CI](https://travis-ci.org)
+- **Docker support**
+- **Code coverage**: using [codecov](https://about.codecov.io/)
+- **Code quality**: with [Codacy](https://www.codacy.com)
+- **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
+- **Changelog Generation**: with [Standard Version](https://github.com/conventional-changelog/standard-version)
+- **Structured Commit Messages**: with [Commitizen](https://github.com/commitizen/cz-cli)
+- **Commit Linting**: with [CommitLint](https://github.com/conventional-changelog/commitlint)
+
+## License
+
+[//]: # ([MIT]&#40;LICENSE&#41;)
+[Closed Source](LICENSE)

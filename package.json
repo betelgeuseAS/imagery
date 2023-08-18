@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Software for writing books",
   "private": true,
-  "author": "Andrew Samchuk",
+  "repository": "https://github.com/betelgeuseAS/imagery.git",
+  "bugs": {
+    "url": "https://github.com/betelgeuseAS/imagery/issues"
+  },
+  "author": "Andrew Samchuk <cepheus.as@gmail.com>",
   "license": "Closed Source",
   "homepage": "./",
   "scripts": {
