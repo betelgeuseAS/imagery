@@ -15,10 +15,13 @@ const jwtStrategy = new JwtStrategy(
       if (payload.type !== tokenTypes.ACCESS) {
         throw new Error('Invalid token type')
       }
+
       const user = await User.findById(payload.sub)
+
       if (!user) {
         return done(null, false)
       }
+
       done(null, user)
     } catch (error) {
       done(error, false)

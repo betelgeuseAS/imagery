@@ -10,6 +10,7 @@ const pick = (object: Record<string, any>, keys: string[]) =>
       // eslint-disable-next-line no-param-reassign
       obj[key] = object[key]
     }
+
     return obj
   }, {})
 

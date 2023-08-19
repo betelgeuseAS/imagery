@@ -31,6 +31,7 @@ export const generateToken = (
     exp: expires.unix(),
     type
   }
+
   return jwt.sign(payload, secret)
 }
 
@@ -57,6 +58,7 @@ export const saveToken = async (
     type,
     blacklisted
   })
+
   return tokenDoc
 }
 
@@ -71,18 +73,22 @@ export const verifyToken = async (
   type: string
 ): Promise<ITokenDoc> => {
   const payload = jwt.verify(token, config.jwt.secret)
+
   if (typeof payload.sub !== 'string') {
     throw new ApiError(httpStatus.BAD_REQUEST, 'bad user')
   }
+
   const tokenDoc = await Token.findOne({
     token,
     type,
     user: payload.sub,
     blacklisted: false
   })
+
   if (!tokenDoc) {
     throw new Error('Token not found')
   }
+
   return tokenDoc
 }
 
@@ -113,6 +119,7 @@ export const generateAuthTokens = async (
     refreshTokenExpires,
     tokenTypes.REFRESH
   )
+
   await saveToken(
     refreshToken,
     user.id,
@@ -141,9 +148,11 @@ export const generateResetPasswordToken = async (
   email: string
 ): Promise<string> => {
   const user = await userService.getUserByEmail(email)
+
   if (!user) {
     throw new ApiError(httpStatus.NO_CONTENT, '')
   }
+
   const expires = moment().add(
     config.jwt.resetPasswordExpirationMinutes,
     'minutes'
@@ -159,6 +168,7 @@ export const generateResetPasswordToken = async (
     expires,
     tokenTypes.RESET_PASSWORD
   )
+
   return resetPasswordToken
 }
 
@@ -179,6 +189,8 @@ export const generateVerifyEmailToken = async (
     expires,
     tokenTypes.VERIFY_EMAIL
   )
+
   await saveToken(verifyEmailToken, user.id, expires, tokenTypes.VERIFY_EMAIL)
+
   return verifyEmailToken
 }

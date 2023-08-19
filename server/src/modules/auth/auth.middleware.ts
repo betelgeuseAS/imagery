@@ -7,22 +7,32 @@ import { roleRights } from '../../config/roles'
 import { IUserDoc } from '../user/user.interfaces'
 
 const verifyCallback =
-  (req: Request, resolve: any, reject: any, requiredRights: string[]) =>
+  (
+    req: Request,
+    resolve: (value?: PromiseLike<void> | void) => void,
+    reject: (reason?: unknown) => void,
+    requiredRights: string[]
+  ) =>
   async (err: Error, user: IUserDoc, info: string) => {
     if (err || info || !user) {
       return reject(
         new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate')
       )
     }
+
     req.user = user
 
     if (requiredRights.length) {
       const userRights = roleRights.get(user.role)
-      if (!userRights)
+
+      if (!userRights) {
         return reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden'))
+      }
+
       const hasRequiredRights = requiredRights.every((requiredRight: string) =>
         userRights.includes(requiredRight)
       )
+
       if (!hasRequiredRights && req.params['userId'] !== user.id) {
         return reject(new ApiError(httpStatus.FORBIDDEN, 'Forbidden'))
       }

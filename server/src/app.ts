@@ -1,6 +1,6 @@
 import express, { Express } from 'express'
 import helmet from 'helmet'
-import xss from 'xss-clean'
+const xss = require('xss-clean') // import xss from 'xss-clean'
 import ExpressMongoSanitize from 'express-mongo-sanitize'
 import compression from 'compression'
 import cors from 'cors'

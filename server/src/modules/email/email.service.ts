@@ -5,7 +5,7 @@ import logger from '../logger/logger'
 import { Message } from './email.interfaces'
 
 export const transport = nodemailer.createTransport(config.email.smtp)
-/* istanbul ignore next */
+
 if (config.env !== 'test') {
   transport
     .verify()
@@ -38,6 +38,7 @@ export const sendEmail = async (
     text,
     html
   }
+
   await transport.sendMail(msg)
 }
 
@@ -52,7 +53,7 @@ export const sendResetPasswordEmail = async (
   token: string
 ): Promise<void> => {
   const subject = 'Reset password'
-  // replace this url with the link to the reset password page of your front-end app
+  // Replace this url with the link to the reset password page of your front-end app
   const resetPasswordUrl = `http://${config.clientUrl}/reset-password?token=${token}`
   const text = `Hi,
   To reset your password, click on this link: ${resetPasswordUrl}
@@ -62,6 +63,7 @@ export const sendResetPasswordEmail = async (
   <p>If you did not request any password resets, please ignore this email.</p>
   <p>Thanks,</p>
   <p><strong>Team</strong></p></div>`
+
   await sendEmail(to, subject, text, html)
 }
 
@@ -78,7 +80,7 @@ export const sendVerificationEmail = async (
   name: string
 ): Promise<void> => {
   const subject = 'Email Verification'
-  // replace this url with the link to the email verification page of your front-end app
+  // Replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`
   const text = `Hi ${name},
   To verify your email, click on this link: ${verificationEmailUrl}
@@ -86,6 +88,7 @@ export const sendVerificationEmail = async (
   const html = `<div style="margin:30px; padding:30px; border:1px solid black; border-radius: 20px 10px;"><h4><strong>Hi ${name},</strong></h4>
   <p>To verify your email, click on this link: ${verificationEmailUrl}</p>
   <p>If you did not create an account, then ignore this email.</p></div>`
+
   await sendEmail(to, subject, text, html)
 }
 
@@ -102,7 +105,7 @@ export const sendSuccessfulRegistration = async (
   name: string
 ): Promise<void> => {
   const subject = 'Email Verification'
-  // replace this url with the link to the email verification page of your front-end app
+  // Replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`
   const text = `Hi ${name},
   Congratulations! Your account has been created.
@@ -116,6 +119,7 @@ export const sendSuccessfulRegistration = async (
   <p>Don't hesitate to contact us if you face any problems</p>
   <p>Regards,</p>
   <p><strong>Team</strong></p></div>`
+
   await sendEmail(to, subject, text, html)
 }
 
@@ -130,7 +134,7 @@ export const sendAccountCreated = async (
   name: string
 ): Promise<void> => {
   const subject = 'Account Created Successfully'
-  // replace this url with the link to the email verification page of your front-end app
+  // Replace this url with the link to the email verification page of your front-end app
   const loginUrl = `http://${config.clientUrl}/auth/login`
   const text = `Hi ${name},
   Congratulations! Your account has been created successfully.
@@ -144,5 +148,6 @@ export const sendAccountCreated = async (
   <p>Don't hesitate to contact us if you face any problems</p>
   <p>Regards,</p>
   <p><strong>Team</strong></p></div>`
+
   await sendEmail(to, subject, text, html)
 }

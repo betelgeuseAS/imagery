@@ -39,7 +39,7 @@ const tokenSchema = new mongoose.Schema<ITokenDoc, ITokenModel>(
   }
 )
 
-// add plugin that converts mongoose to json
+// Add plugin that converts mongoose to json
 tokenSchema.plugin(toJSON)
 
 const Token = mongoose.model<ITokenDoc, ITokenModel>('Token', tokenSchema)

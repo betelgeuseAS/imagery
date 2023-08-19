@@ -23,9 +23,11 @@ export const loginUserWithEmailAndPassword = async (
   password: string
 ): Promise<IUserDoc> => {
   const user = await getUserByEmail(email)
+
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password')
   }
+
   return user
 }
 
@@ -40,9 +42,11 @@ export const logout = async (refreshToken: string): Promise<void> => {
     type: tokenTypes.REFRESH,
     blacklisted: false
   })
+
   if (!refreshTokenDoc) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Not found')
   }
+
   await refreshTokenDoc.deleteOne()
 }
 
@@ -59,11 +63,14 @@ export const refreshAuth = async (
     const user = await getUserById(
       new mongoose.Types.ObjectId(refreshTokenDoc.user)
     )
+
     if (!user) {
       throw new Error()
     }
+
     await refreshTokenDoc.deleteOne()
     const tokens = await generateAuthTokens(user)
+
     return { user, tokens }
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate')
@@ -88,9 +95,11 @@ export const resetPassword = async (
     const user = await getUserById(
       new mongoose.Types.ObjectId(resetPasswordTokenDoc.user)
     )
+
     if (!user) {
       throw new Error()
     }
+
     await updateUserById(user.id, { password: newPassword })
     await Token.deleteMany({ user: user.id, type: tokenTypes.RESET_PASSWORD })
   } catch (error) {
@@ -114,11 +123,14 @@ export const verifyEmail = async (
     const user = await getUserById(
       new mongoose.Types.ObjectId(verifyEmailTokenDoc.user)
     )
+
     if (!user) {
       throw new Error()
     }
+
     await Token.deleteMany({ user: user.id, type: tokenTypes.VERIFY_EMAIL })
     const updatedUser = await updateUserById(user.id, { isEmailVerified: true })
+
     return updatedUser
   } catch (error) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Email verification failed')

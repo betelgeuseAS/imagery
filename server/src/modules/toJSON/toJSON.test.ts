@@ -28,6 +28,7 @@ describe('toJSON plugin', () => {
       schema
     )
     const doc = new SampleModel()
+
     expect(doc.toJSON()).not.toHaveProperty('_id')
     expect(doc.toJSON()).toHaveProperty('id', doc._id.toString())
   })
@@ -40,6 +41,7 @@ describe('toJSON plugin', () => {
       schema
     )
     const doc = new SampleModel()
+
     expect(doc.toJSON()).not.toHaveProperty('__v')
   })
 
@@ -54,6 +56,7 @@ describe('toJSON plugin', () => {
       schema
     )
     const doc = new SampleModel()
+
     expect(doc.toJSON()).not.toHaveProperty('createdAt')
     expect(doc.toJSON()).not.toHaveProperty('updatedAt')
   })
@@ -72,6 +75,7 @@ describe('toJSON plugin', () => {
       public: 'some public value',
       private: 'some private value'
     })
+
     expect(doc.toJSON()).not.toHaveProperty('private')
     expect(doc.toJSON()).toHaveProperty('public')
   })
@@ -94,6 +98,7 @@ describe('toJSON plugin', () => {
         private: 'some nested private value'
       }
     })
+
     expect(doc.toJSON()).not.toHaveProperty('nested.private')
     expect(doc.toJSON()).toHaveProperty('public')
   })
@@ -122,6 +127,7 @@ describe('toJSON plugin', () => {
       public: 'some public value',
       private: 'some private value'
     })
+
     expect(doc.toJSON()).not.toHaveProperty('private')
     expect(doc.toJSON()).toHaveProperty('public')
   })

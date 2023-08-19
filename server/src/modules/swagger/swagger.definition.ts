@@ -3,12 +3,13 @@ import config from '../../config/config'
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'node-express-typescript-boilerplate API documentation',
+    title: 'Imagery API documentation',
     version: '0.0.1',
-    description: 'This is a node express mongoose boilerplate in typescript',
+    description:
+      'Software that will help writers write both short stories and book series',
     license: {
-      name: 'MIT',
-      url: 'https://github.com/saisilinus/node-express-mongoose-typescript-boilerplate.git'
+      name: 'Closed Source', // MIT
+      url: 'https://github.com/betelgeuseAS/imagery.git'
     }
   },
   servers: [

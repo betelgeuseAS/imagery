@@ -6,6 +6,7 @@ import User from './user.model'
 describe('User model', () => {
   describe('User validation', () => {
     let newUser: NewCreatedUser
+
     beforeEach(() => {
       newUser = {
         name: faker.name.findName(),
@@ -53,6 +54,7 @@ describe('User model', () => {
         password: 'password1',
         role: 'user'
       }
+
       expect(new User(newUser).toJSON()).not.toHaveProperty('password')
     })
   })

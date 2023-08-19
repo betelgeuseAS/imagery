@@ -1,6 +1,5 @@
 class ApiError extends Error {
   statusCode: number
-
   isOperational: boolean
 
   override stack?: string
@@ -12,8 +11,10 @@ class ApiError extends Error {
     stack = ''
   ) {
     super(message)
+
     this.statusCode = statusCode
     this.isOperational = isOperational
+
     if (stack) {
       this.stack = stack
     } else {

@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   }
 )
 
-// add plugin that converts mongoose to json
+// Add plugin that converts mongoose to json
 userSchema.plugin(toJSON)
 userSchema.plugin(paginate)
 
@@ -72,6 +72,7 @@ userSchema.static(
     excludeUserId: mongoose.ObjectId
   ): Promise<boolean> {
     const user = await this.findOne({ email, _id: { $ne: excludeUserId } })
+
     return !!user
   }
 )
@@ -84,16 +85,15 @@ userSchema.static(
 userSchema.method(
   'isPasswordMatch',
   async function (password: string): Promise<boolean> {
-    const user = this
-    return bcrypt.compare(password, user.password)
+    return bcrypt.compare(password, this.password)
   }
 )
 
 userSchema.pre('save', async function (next) {
-  const user = this
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8)
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 8)
   }
+
   next()
 })
 

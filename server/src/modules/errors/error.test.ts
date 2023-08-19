@@ -173,6 +173,7 @@ describe('Error middlewares', () => {
           stack: error.stack
         })
       )
+
       config.env = process.env['NODE_ENV'] as typeof config.env
     })
 
@@ -191,6 +192,7 @@ describe('Error middlewares', () => {
           message: httpStatus[httpStatus.INTERNAL_SERVER_ERROR]
         })
       )
+
       expect(res.locals['errorMessage']).toBe(error.message)
       config.env = process.env['NODE_ENV'] as typeof config.env
     })
@@ -210,6 +212,7 @@ describe('Error middlewares', () => {
           message: error.message
         })
       )
+
       config.env = process.env['NODE_ENV'] as typeof config.env
     })
   })

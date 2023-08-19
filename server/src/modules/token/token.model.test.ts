@@ -35,6 +35,7 @@ describe('Token Model', () => {
     'days'
   )
   let newToken: NewToken
+
   beforeEach(() => {
     newToken = {
       token: userOneAccessToken,

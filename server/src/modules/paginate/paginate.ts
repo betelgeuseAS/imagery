@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { Schema, Document, Model } from 'mongoose'
 
 export interface QueryResult {
@@ -42,28 +41,34 @@ const paginate = <T extends Document, U extends Model<U>>(
   schema.static(
     'paginate',
     async function (
-      filter: Record<string, any>,
+      filter: Record<string, unknown>,
       options: IOptions
     ): Promise<QueryResult> {
       let sort: string = ''
+
       if (options.sortBy) {
-        const sortingCriteria: any = []
+        const sortingCriteria: string[] = []
+
         options.sortBy.split(',').forEach((sortOption: string) => {
           const [key, order] = sortOption.split(':')
           sortingCriteria.push((order === 'desc' ? '-' : '') + key)
         })
+
         sort = sortingCriteria.join(' ')
       } else {
         sort = 'createdAt'
       }
 
       let project: string = ''
+
       if (options.projectBy) {
         const projectionCriteria: string[] = []
+
         options.projectBy.split(',').forEach((projectOption) => {
           const [key, include] = projectOption.split(':')
           projectionCriteria.push((include === 'hide' ? '-' : '') + key)
         })
+
         project = projectionCriteria.join(' ')
       } else {
         project = '-createdAt -updatedAt'
@@ -109,6 +114,7 @@ const paginate = <T extends Document, U extends Model<U>>(
           totalPages,
           totalResults
         }
+
         return Promise.resolve(result)
       })
     }

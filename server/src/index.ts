@@ -9,7 +9,7 @@ let server: http.Server
 
 // Connect to DB
 mongoose.connect(config.mongoose.url).then((connection: Mongoose) => {
-  logger.info(`Connected to MongoDB: ${connection.connection?.host}`)
+  logger.info(`Connected to MongoDB on host ${connection.connection?.host}`)
 
   server = app.listen(config.port, () => {
     logger.info(`Server started on port ${config.port}`)
