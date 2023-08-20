@@ -314,7 +314,9 @@ describe('Auth routes', () => {
         refresh: { token: expect.anything(), expires: expect.anything() }
       })
 
+      // This test not working in strict mode and returns an error:
       // Error 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode
+      // To prevent the addition of "use strict" mode, you can use "noImplicitUseStrict": true in tsconfig
       // const dbRefreshTokenDoc = await Token.findOne({
       //   token: res.body.tokens.refresh.token
       // })
