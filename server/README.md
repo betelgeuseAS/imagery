@@ -77,21 +77,23 @@ See the [Docker](https://eslint.org/) for more information.
 
 **Testing**
 
+Before running the tests, build the application by running the `npm run build` command.
+
 ```bash
 # Run all tests
 npm test
 
 # Run TypeScript tests
-# npm run test:ts
+ npm run test:ts
 
 # Run JS tests
-# npm rn test:js
+ npm rn test:js
 
 # Run all tests in watch mode
-# npm run test:watch
+ npm run test:watch
 
 # Run test coverage
-# npm run coverage
+ npm run test:coverage
 ```
 
 Jest is a JavaScript testing framework that helps you create, run, and analyse tests of your program code. It allows you to automate the testing process by checking whether the program code works correctly, ensuring the reliability and stability of applications.

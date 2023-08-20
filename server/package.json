@@ -11,7 +11,11 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i --colors --verbose --detectOpenHandles",
+    "test:ts": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i --colors --verbose --detectOpenHandles -- 'ts$'",
+    "test:js": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i --colors --verbose --detectOpenHandles -- 'js$'",
+    "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i --watchAll",
+    "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prettier": "prettier --check .",

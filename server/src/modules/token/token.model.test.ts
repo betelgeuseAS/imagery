@@ -16,7 +16,7 @@ const accessTokenExpires = moment().add(
 
 const userOne = {
   _id: new mongoose.Types.ObjectId(),
-  name: faker.name.findName(),
+  name: faker.person.fullName(),
   email: faker.internet.email().toLowerCase(),
   password,
   role: 'user',
