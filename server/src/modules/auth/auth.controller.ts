@@ -2,11 +2,11 @@ import httpStatus from 'http-status'
 import { Request, Response } from 'express'
 
 import catchAsync from '../utils/catchAsync'
+import * as authService from './auth.service'
 import { tokenService } from '../token'
 import { userService } from '../user'
-import * as authService from './auth.service'
 import { emailService } from '../email'
-import { IUserDoc } from '@modules/user/user.interfaces'
+import { IUserDoc } from '../user/user.interfaces'
 
 export const register = catchAsync(async (req: Request, res: Response) => {
   const user = await userService.registerUser(req.body)
