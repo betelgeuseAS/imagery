@@ -103,6 +103,6 @@
     // "skipDefaultLibCheck": true, /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   }
-  // "include": ["src/**/*"], /* Specifies an array of filenames or patterns to include in the program. */
+  // "include": ["src/**/*"] /* Specifies an array of filenames or patterns to include in the program. */,
   // "exclude": ["node_modules"] /* Specifies an array of filenames or patterns that should be skipped when resolving include. */
 }

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+
     "target": "es2022",
     "module": "esnext",
     "moduleResolution": "node",
@@ -10,7 +12,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  }
+  // "include": ["src/**/*"] /* Specifies an array of filenames or patterns to include in the program. */,
+  // "exclude": ["node_modules", "build"] /* Specifies an array of filenames or patterns that should be skipped when resolving include. */
 }
