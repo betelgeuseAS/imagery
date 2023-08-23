@@ -12,9 +12,7 @@ function Dashboard() {
 
   const { user } = useSelector((state) => state.auth)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { goals, isLoading, isError, message } = useSelector(
-    (state) => state.goals
-  )
+  const { goals, isLoading, isError, message } = useSelector((state) => state.goals)
 
   useEffect(() => {
     if (isError) {
