@@ -2,10 +2,10 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
 
+import { IUserDoc, IUserModel } from './user.interfaces'
 import toJSON from '../toJSON/toJSON'
 import paginate from '../paginate/paginate'
 import { roles } from '../../config/roles'
-import { IUserDoc, IUserModel } from './user.interfaces'
 
 const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
   {
@@ -33,9 +33,7 @@ const userSchema = new mongoose.Schema<IUserDoc, IUserModel>(
       minlength: 8,
       validate(value: string) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error(
-            'Password must contain at least one letter and one number'
-          )
+          throw new Error('Password must contain at least one letter and one number')
         }
       },
       private: true // used by the toJSON plugin
@@ -65,29 +63,20 @@ userSchema.plugin(paginate)
  * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
  * @returns {Promise<boolean>}
  */
-userSchema.static(
-  'isEmailTaken',
-  async function (
-    email: string,
-    excludeUserId: mongoose.ObjectId
-  ): Promise<boolean> {
-    const user = await this.findOne({ email, _id: { $ne: excludeUserId } })
+userSchema.static('isEmailTaken', async function (email: string, excludeUserId: mongoose.ObjectId): Promise<boolean> {
+  const user = await this.findOne({ email, _id: { $ne: excludeUserId } })
 
-    return !!user
-  }
-)
+  return !!user
+})
 
 /**
  * Check if password matches the user's password
  * @param {string} password
  * @returns {Promise<boolean>}
  */
-userSchema.method(
-  'isPasswordMatch',
-  async function (password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password)
-  }
-)
+userSchema.method('isPasswordMatch', async function (password: string): Promise<boolean> {
+  return bcrypt.compare(password, this.password)
+})
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {

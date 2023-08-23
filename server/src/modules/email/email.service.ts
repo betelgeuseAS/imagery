@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer'
 
+import { Message } from './email.interfaces'
 import config from '../../config/config'
 import logger from '../logger/logger'
-import { Message } from './email.interfaces'
 
 export const transport = nodemailer.createTransport(config.email.smtp)
 
@@ -11,9 +11,7 @@ if (config.env !== 'test') {
     .verify()
     .then(() => logger.info('Connected to email server'))
     .catch(() =>
-      logger.warn(
-        'Unable to connect to email server. Make sure you have configured the SMTP options in .env'
-      )
+      logger.warn('Unable to connect to email server. Make sure you have configured the SMTP options in .env')
     )
 }
 
@@ -25,19 +23,8 @@ if (config.env !== 'test') {
  * @param {string} html
  * @returns {Promise<void>}
  */
-export const sendEmail = async (
-  to: string,
-  subject: string,
-  text: string,
-  html: string
-): Promise<void> => {
-  const msg: Message = {
-    from: config.email.from,
-    to,
-    subject,
-    text,
-    html
-  }
+export const sendEmail = async (to: string, subject: string, text: string, html: string): Promise<void> => {
+  const msg: Message = { from: config.email.from, to, subject, text, html }
 
   await transport.sendMail(msg)
 }
@@ -48,10 +35,7 @@ export const sendEmail = async (
  * @param {string} token
  * @returns {Promise<void>}
  */
-export const sendResetPasswordEmail = async (
-  to: string,
-  token: string
-): Promise<void> => {
+export const sendResetPasswordEmail = async (to: string, token: string): Promise<void> => {
   const subject = 'Reset password'
   // Replace this url with the link to the reset password page of your front-end app
   const resetPasswordUrl = `http://${config.clientUrl}/reset-password?token=${token}`
@@ -74,11 +58,7 @@ export const sendResetPasswordEmail = async (
  * @param {string} name
  * @returns {Promise<void>}
  */
-export const sendVerificationEmail = async (
-  to: string,
-  token: string,
-  name: string
-): Promise<void> => {
+export const sendVerificationEmail = async (to: string, token: string, name: string): Promise<void> => {
   const subject = 'Email Verification'
   // Replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`
@@ -99,11 +79,7 @@ export const sendVerificationEmail = async (
  * @param {string} name
  * @returns {Promise<void>}
  */
-export const sendSuccessfulRegistration = async (
-  to: string,
-  token: string,
-  name: string
-): Promise<void> => {
+export const sendSuccessfulRegistration = async (to: string, token: string, name: string): Promise<void> => {
   const subject = 'Email Verification'
   // Replace this url with the link to the email verification page of your front-end app
   const verificationEmailUrl = `http://${config.clientUrl}/verify-email?token=${token}`
@@ -129,10 +105,7 @@ export const sendSuccessfulRegistration = async (
  * @param {string} name
  * @returns {Promise<void>}
  */
-export const sendAccountCreated = async (
-  to: string,
-  name: string
-): Promise<void> => {
+export const sendAccountCreated = async (to: string, name: string): Promise<void> => {
   const subject = 'Account Created Successfully'
   // Replace this url with the link to the email verification page of your front-end app
   const loginUrl = `http://${config.clientUrl}/auth/login`

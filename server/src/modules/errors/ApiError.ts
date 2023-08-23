@@ -4,12 +4,7 @@ class ApiError extends Error {
 
   override stack?: string
 
-  constructor(
-    statusCode: number,
-    message: string,
-    isOperational = true,
-    stack = ''
-  ) {
+  constructor(statusCode: number, message: string, isOperational = true, stack = '') {
     super(message)
 
     this.statusCode = statusCode

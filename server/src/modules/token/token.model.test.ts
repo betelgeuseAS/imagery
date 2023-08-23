@@ -9,10 +9,7 @@ import Token from './token.model'
 import * as tokenService from './token.service'
 
 const password = 'password1'
-const accessTokenExpires = moment().add(
-  config.jwt.accessExpirationMinutes,
-  'minutes'
-)
+const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes')
 
 const userOne = {
   _id: new mongoose.Types.ObjectId(),
@@ -23,17 +20,10 @@ const userOne = {
   isEmailVerified: false
 }
 
-const userOneAccessToken = tokenService.generateToken(
-  userOne._id,
-  accessTokenExpires,
-  tokenTypes.ACCESS
-)
+const userOneAccessToken = tokenService.generateToken(userOne._id, accessTokenExpires, tokenTypes.ACCESS)
 
 describe('Token Model', () => {
-  const refreshTokenExpires = moment().add(
-    config.jwt.refreshExpirationDays,
-    'days'
-  )
+  const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days')
   let newToken: NewToken
 
   beforeEach(() => {

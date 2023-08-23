@@ -1,8 +1,8 @@
 import mongoose, { Mongoose } from 'mongoose'
 import * as http from 'http'
 
-import config from './config/config'
 import app from './app'
+import config from './config/config'
 import logger from './modules/logger/logger'
 
 let server: http.Server

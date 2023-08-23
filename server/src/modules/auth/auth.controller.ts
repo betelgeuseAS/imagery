@@ -1,12 +1,12 @@
 import httpStatus from 'http-status'
 import { Request, Response } from 'express'
 
+import { IUserDoc } from '../user/user.interfaces'
 import catchAsync from '../utils/catchAsync'
 import * as authService from './auth.service'
 import { tokenService } from '../token'
 import { userService } from '../user'
 import { emailService } from '../email'
-import { IUserDoc } from '../user/user.interfaces'
 
 export const register = catchAsync(async (req: Request, res: Response) => {
   const user = await userService.registerUser(req.body)
@@ -35,20 +35,12 @@ export const refreshTokens = catchAsync(async (req: Request, res: Response) => {
   res.send({ ...userWithTokens })
 })
 
-export const forgotPassword = catchAsync(
-  async (req: Request, res: Response) => {
-    const resetPasswordToken = await tokenService.generateResetPasswordToken(
-      req.body.email
-    )
+export const forgotPassword = catchAsync(async (req: Request, res: Response) => {
+  const resetPasswordToken = await tokenService.generateResetPasswordToken(req.body.email)
+  await emailService.sendResetPasswordEmail(req.body.email, resetPasswordToken)
 
-    await emailService.sendResetPasswordEmail(
-      req.body.email,
-      resetPasswordToken
-    )
-
-    res.status(httpStatus.NO_CONTENT).send()
-  }
-)
+  res.status(httpStatus.NO_CONTENT).send()
+})
 
 export const resetPassword = catchAsync(async (req: Request, res: Response) => {
   await authService.resetPassword(req.query['token'], req.body.password)
@@ -56,23 +48,13 @@ export const resetPassword = catchAsync(async (req: Request, res: Response) => {
   res.status(httpStatus.NO_CONTENT).send()
 })
 
-export const sendVerificationEmail = catchAsync(
-  async (req: Request, res: Response) => {
-    const user = req.user as IUserDoc
+export const sendVerificationEmail = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user as IUserDoc
+  const verifyEmailToken = await tokenService.generateVerifyEmailToken(user as IUserDoc)
+  await emailService.sendVerificationEmail(user.email, verifyEmailToken, user.name)
 
-    const verifyEmailToken = await tokenService.generateVerifyEmailToken(
-      user as IUserDoc
-    )
-
-    await emailService.sendVerificationEmail(
-      user.email,
-      verifyEmailToken,
-      user.name
-    )
-
-    res.status(httpStatus.NO_CONTENT).send()
-  }
-)
+  res.status(httpStatus.NO_CONTENT).send()
+})
 
 export const verifyEmail = catchAsync(async (req: Request, res: Response) => {
   await authService.verifyEmail(req.query['token'])

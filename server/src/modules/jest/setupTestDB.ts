@@ -9,9 +9,7 @@ const setupTestDB = () => {
 
   beforeEach(async () => {
     await Promise.all(
-      Object.values(mongoose.connection.collections).map(async (collection) =>
-        collection.deleteMany({})
-      )
+      Object.values(mongoose.connection.collections).map(async (collection) => collection.deleteMany({}))
     )
   })
 

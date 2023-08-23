@@ -7,21 +7,18 @@ import moment from 'moment'
 
 import app from '../../app'
 import config from '../../config/config'
+import { NewCreatedUser } from './user.interfaces'
 import tokenTypes from '../token/token.types'
 import * as tokenService from '../token/token.service'
 import setupTestDB from '../jest/setupTestDB'
 import User from './user.model'
-import { NewCreatedUser } from './user.interfaces'
 
 setupTestDB()
 
 const password = 'password1'
 const salt = bcrypt.genSaltSync(8)
 const hashedPassword = bcrypt.hashSync(password, salt)
-const accessTokenExpires = moment().add(
-  config.jwt.accessExpirationMinutes,
-  'minutes'
-)
+const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes')
 
 const userOne = {
   _id: new mongoose.Types.ObjectId(),
@@ -50,21 +47,11 @@ const admin = {
   isEmailVerified: false
 }
 
-const userOneAccessToken = tokenService.generateToken(
-  userOne._id,
-  accessTokenExpires,
-  tokenTypes.ACCESS
-)
-const adminAccessToken = tokenService.generateToken(
-  admin._id,
-  accessTokenExpires,
-  tokenTypes.ACCESS
-)
+const userOneAccessToken = tokenService.generateToken(userOne._id, accessTokenExpires, tokenTypes.ACCESS)
+const adminAccessToken = tokenService.generateToken(admin._id, accessTokenExpires, tokenTypes.ACCESS)
 
 const insertUsers = async (users: Record<string, any>[]) => {
-  await User.insertMany(
-    users.map((user) => ({ ...user, password: hashedPassword }))
-  )
+  await User.insertMany(users.map((user) => ({ ...user, password: hashedPassword })))
 }
 
 describe('User routes', () => {
@@ -130,10 +117,7 @@ describe('User routes', () => {
     })
 
     test('should return 401 error if access token is missing', async () => {
-      await request(app)
-        .post('/v1/users')
-        .send(newUser)
-        .expect(httpStatus.UNAUTHORIZED)
+      await request(app).post('/v1/users').send(newUser).expect(httpStatus.UNAUTHORIZED)
     })
 
     test('should return 403 error if logged in user is not admin', async () => {
@@ -239,13 +223,11 @@ describe('User routes', () => {
 
     test('should return 401 if access token is missing', async () => {
       await insertUsers([userOne, userTwo, admin])
-
       await request(app).get('/v1/users').send().expect(httpStatus.UNAUTHORIZED)
     })
 
     test('should return 403 if a non-admin is trying to access all users', async () => {
       await insertUsers([userOne, userTwo, admin])
-
       await request(app)
         .get('/v1/users')
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -444,10 +426,7 @@ describe('User routes', () => {
     test('should return 401 error if access token is missing', async () => {
       await insertUsers([userOne])
 
-      await request(app)
-        .get(`/v1/users/${userOne._id}`)
-        .send()
-        .expect(httpStatus.UNAUTHORIZED)
+      await request(app).get(`/v1/users/${userOne._id}`).send().expect(httpStatus.UNAUTHORIZED)
     })
 
     test('should return 403 error if user is trying to get another user', async () => {
@@ -508,10 +487,7 @@ describe('User routes', () => {
     test('should return 401 error if access token is missing', async () => {
       await insertUsers([userOne])
 
-      await request(app)
-        .delete(`/v1/users/${userOne._id}`)
-        .send()
-        .expect(httpStatus.UNAUTHORIZED)
+      await request(app).delete(`/v1/users/${userOne._id}`).send().expect(httpStatus.UNAUTHORIZED)
     })
 
     test('should return 403 error if user is trying to delete another user', async () => {
@@ -558,12 +534,12 @@ describe('User routes', () => {
   describe('PATCH /v1/users/:userId', () => {
     test('should return 200 and successfully update user if data is ok', async () => {
       await insertUsers([userOne])
+
       const updateBody = {
         name: faker.person.fullName(),
         email: faker.internet.email().toLowerCase(),
         password: 'newPassword1'
       }
-
       const res = await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -592,18 +568,15 @@ describe('User routes', () => {
 
     test('should return 401 error if access token is missing', async () => {
       await insertUsers([userOne])
-      const updateBody = { name: faker.person.fullName() }
 
-      await request(app)
-        .patch(`/v1/users/${userOne._id}`)
-        .send(updateBody)
-        .expect(httpStatus.UNAUTHORIZED)
+      const updateBody = { name: faker.person.fullName() }
+      await request(app).patch(`/v1/users/${userOne._id}`).send(updateBody).expect(httpStatus.UNAUTHORIZED)
     })
 
     test('should return 403 if user is updating another user', async () => {
       await insertUsers([userOne, userTwo])
-      const updateBody = { name: faker.person.fullName() }
 
+      const updateBody = { name: faker.person.fullName() }
       await request(app)
         .patch(`/v1/users/${userTwo._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -613,8 +586,8 @@ describe('User routes', () => {
 
     test('should return 200 and successfully update user if admin is updating another user', async () => {
       await insertUsers([userOne, admin])
-      const updateBody = { name: faker.person.fullName() }
 
+      const updateBody = { name: faker.person.fullName() }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${adminAccessToken}`)
@@ -624,8 +597,8 @@ describe('User routes', () => {
 
     test('should return 404 if admin is updating another user that is not found', async () => {
       await insertUsers([admin])
-      const updateBody = { name: faker.person.fullName() }
 
+      const updateBody = { name: faker.person.fullName() }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${adminAccessToken}`)
@@ -635,8 +608,8 @@ describe('User routes', () => {
 
     test('should return 400 error if userId is not a valid mongo id', async () => {
       await insertUsers([admin])
-      const updateBody = { name: faker.person.fullName() }
 
+      const updateBody = { name: faker.person.fullName() }
       await request(app)
         .patch(`/v1/users/invalidId`)
         .set('Authorization', `Bearer ${adminAccessToken}`)
@@ -646,8 +619,8 @@ describe('User routes', () => {
 
     test('should return 400 if email is invalid', async () => {
       await insertUsers([userOne])
-      const updateBody = { email: 'invalidEmail' }
 
+      const updateBody = { email: 'invalidEmail' }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -657,8 +630,8 @@ describe('User routes', () => {
 
     test('should return 400 if email is already taken', async () => {
       await insertUsers([userOne, userTwo])
-      const updateBody = { email: userTwo.email }
 
+      const updateBody = { email: userTwo.email }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -668,8 +641,8 @@ describe('User routes', () => {
 
     test('should not return 400 if email is my email', async () => {
       await insertUsers([userOne])
-      const updateBody = { email: userOne.email }
 
+      const updateBody = { email: userOne.email }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -679,8 +652,8 @@ describe('User routes', () => {
 
     test('should return 400 if password length is less than 8 characters', async () => {
       await insertUsers([userOne])
-      const updateBody = { password: 'passwo1' }
 
+      const updateBody = { password: 'passwo1' }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)
@@ -690,8 +663,8 @@ describe('User routes', () => {
 
     test('should return 400 if password does not contain both letters and numbers', async () => {
       await insertUsers([userOne])
-      const updateBody = { password: 'password' }
 
+      const updateBody = { password: 'password' }
       await request(app)
         .patch(`/v1/users/${userOne._id}`)
         .set('Authorization', `Bearer ${userOneAccessToken}`)

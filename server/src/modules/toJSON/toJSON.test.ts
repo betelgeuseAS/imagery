@@ -23,10 +23,7 @@ describe('toJSON plugin', () => {
   it('should replace _id with id', () => {
     const schema = new mongoose.Schema<SampleSchemaDoc, SampleSchemaModel>()
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel()
 
     expect(doc.toJSON()).not.toHaveProperty('_id')
@@ -36,25 +33,16 @@ describe('toJSON plugin', () => {
   it('should remove __v', () => {
     const schema = new mongoose.Schema<SampleSchemaDoc, SampleSchemaModel>()
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel()
 
     expect(doc.toJSON()).not.toHaveProperty('__v')
   })
 
   it('should remove createdAt and updatedAt', () => {
-    const schema = new mongoose.Schema<SampleSchemaDoc, SampleSchemaModel>(
-      {},
-      { timestamps: true }
-    )
+    const schema = new mongoose.Schema<SampleSchemaDoc, SampleSchemaModel>({}, { timestamps: true })
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel()
 
     expect(doc.toJSON()).not.toHaveProperty('createdAt')
@@ -67,10 +55,7 @@ describe('toJSON plugin', () => {
       private: { type: String, private: true }
     })
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel({
       public: 'some public value',
       private: 'some private value'
@@ -88,10 +73,7 @@ describe('toJSON plugin', () => {
       }
     })
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel({
       public: 'some public value',
       nested: {
@@ -119,10 +101,7 @@ describe('toJSON plugin', () => {
       }
     )
     schema.plugin(toJSON)
-    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>(
-      'Model',
-      schema
-    )
+    const SampleModel = connection.model<SampleSchemaDoc, SampleSchemaModel>('Model', schema)
     const doc = new SampleModel({
       public: 'some public value',
       private: 'some private value'

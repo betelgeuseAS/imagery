@@ -1,15 +1,9 @@
 import mongoose from 'mongoose'
 
+import { IProject, IProjectDoc, IProjectModel, ITaskDoc, ITaskModel } from './paginate.types'
 import setupTestDB from '../jest/setupTestDB'
 import { toJSON } from '../toJSON'
 import paginate from './paginate'
-import {
-  IProject,
-  IProjectDoc,
-  IProjectModel,
-  ITaskDoc,
-  ITaskModel
-} from './paginate.types'
 
 const projectSchema = new mongoose.Schema<IProjectDoc, IProjectModel>({
   name: {
@@ -30,11 +24,8 @@ projectSchema.virtual('tasks', {
 
 projectSchema.plugin(paginate)
 projectSchema.plugin(toJSON)
-const Project = mongoose.model<IProjectDoc, IProjectModel>(
-  'Project',
-  projectSchema
-)
 
+const Project = mongoose.model<IProjectDoc, IProjectModel>('Project', projectSchema)
 const taskSchema = new mongoose.Schema<ITaskDoc, ITaskModel>({
   name: {
     type: String,
@@ -49,6 +40,7 @@ const taskSchema = new mongoose.Schema<ITaskDoc, ITaskModel>({
 
 taskSchema.plugin(paginate)
 taskSchema.plugin(toJSON)
+
 const Task = mongoose.model<ITaskDoc, ITaskModel>('Task', taskSchema)
 
 setupTestDB()
@@ -58,11 +50,7 @@ describe('paginate plugin', () => {
     test('should populate the specified data fields', async () => {
       const project = await Project.create({ name: 'Project One' })
       const task = await Task.create({ name: 'Task One', project: project._id })
-
-      const taskPages = await Task.paginate(
-        { _id: task._id },
-        { populate: 'project' }
-      )
+      const taskPages = await Task.paginate({ _id: task._id }, { populate: 'project' })
 
       expect(taskPages.results[0]).toMatchObject({
         project: { _id: project._id, name: project.name }
@@ -75,7 +63,6 @@ describe('paginate plugin', () => {
       const projectOne = await Project.create({ name: 'Project One' })
       const projectTwo = await Project.create({ name: 'Project Two' })
       const projectThree = await Project.create({ name: 'Project Three' })
-
       const projectPages = await Project.paginate({}, {})
 
       expect(projectPages.results).toHaveLength(3)
@@ -94,11 +81,7 @@ describe('paginate plugin', () => {
         name: 'Project Three',
         milestones: 3
       })
-
-      const projectPages = await Project.paginate(
-        {},
-        { sortBy: 'milestones:asc' }
-      )
+      const projectPages = await Project.paginate({}, { sortBy: 'milestones:asc' })
 
       expect(projectPages.results).toHaveLength(3)
       expect(projectPages.results[0]).toMatchObject({ name: projectOne.name })
@@ -116,11 +99,7 @@ describe('paginate plugin', () => {
         name: 'Project Three',
         milestones: 3
       })
-
-      const projectPages = await Project.paginate(
-        {},
-        { sortBy: 'milestones:desc' }
-      )
+      const projectPages = await Project.paginate({}, { sortBy: 'milestones:desc' })
 
       expect(projectPages.results).toHaveLength(3)
       expect(projectPages.results[0]).toMatchObject({ name: projectThree.name })
@@ -154,6 +133,7 @@ describe('paginate plugin', () => {
       { name: 'Project Two', milestones: 2 },
       { name: 'Project Three', milestones: 3 }
     ]
+
     beforeEach(async () => {
       await Project.insertMany(projects)
     })
@@ -172,15 +152,13 @@ describe('paginate plugin', () => {
       { name: 'Project Two', milestones: 2 },
       { name: 'Project Three', milestones: 3 }
     ]
+
     beforeEach(async () => {
       await Project.insertMany(projects)
     })
 
     test('should exclude a field when the hide param is specified', async () => {
-      const projectPages = await Project.paginate(
-        {},
-        { projectBy: 'milestones:hide' }
-      )
+      const projectPages = await Project.paginate({}, { projectBy: 'milestones:hide' })
 
       expect(projectPages.results[0]).not.toMatchObject({
         milestones: expect.any(Number)
@@ -188,10 +166,7 @@ describe('paginate plugin', () => {
     })
 
     test('should exclude multiple fields when the hide param is specified', async () => {
-      const projectPages = await Project.paginate(
-        {},
-        { projectBy: 'milestones:hide,name:hide' }
-      )
+      const projectPages = await Project.paginate({}, { projectBy: 'milestones:hide,name:hide' })
 
       expect(projectPages.results[0]).not.toMatchObject({
         milestones: expect.any(Number),
@@ -200,10 +175,7 @@ describe('paginate plugin', () => {
     })
 
     test('should include a field when the include param is specified', async () => {
-      const projectPages = await Project.paginate(
-        {},
-        { projectBy: 'milestones:include' }
-      )
+      const projectPages = await Project.paginate({}, { projectBy: 'milestones:include' })
 
       expect(projectPages.results[0]).not.toMatchObject({
         name: expect.any(String)
@@ -214,20 +186,14 @@ describe('paginate plugin', () => {
     })
 
     test('should include multiple fields when the include param is specified', async () => {
-      const projectPages = await Project.paginate(
-        {},
-        { projectBy: 'milestones:include,name:include' }
-      )
+      const projectPages = await Project.paginate({}, { projectBy: 'milestones:include,name:include' })
 
       expect(projectPages.results[0]).toHaveProperty('milestones')
       expect(projectPages.results[0]).toHaveProperty('name')
     })
 
     test('should always include id when the include param is specified', async () => {
-      const projectPages = await Project.paginate(
-        {},
-        { projectBy: 'milestones:include' }
-      )
+      const projectPages = await Project.paginate({}, { projectBy: 'milestones:include' })
 
       expect(projectPages.results[0]).not.toMatchObject({
         name: expect.any(String)

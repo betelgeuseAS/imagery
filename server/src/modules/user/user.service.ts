@@ -1,24 +1,17 @@
 import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 
+import { NewCreatedUser, UpdateUserBody, IUserDoc, NewRegisteredUser } from './user.interfaces'
 import User from './user.model'
 import ApiError from '../errors/ApiError'
 import { IOptions, QueryResult } from '../paginate/paginate'
-import {
-  NewCreatedUser,
-  UpdateUserBody,
-  IUserDoc,
-  NewRegisteredUser
-} from './user.interfaces'
 
 /**
  * Create a user
  * @param {NewCreatedUser} userBody
  * @returns {Promise<IUserDoc>}
  */
-export const createUser = async (
-  userBody: NewCreatedUser
-): Promise<IUserDoc> => {
+export const createUser = async (userBody: NewCreatedUser): Promise<IUserDoc> => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken')
   }
@@ -31,9 +24,7 @@ export const createUser = async (
  * @param {NewRegisteredUser} userBody
  * @returns {Promise<IUserDoc>}
  */
-export const registerUser = async (
-  userBody: NewRegisteredUser
-): Promise<IUserDoc> => {
+export const registerUser = async (userBody: NewRegisteredUser): Promise<IUserDoc> => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken')
   }
@@ -47,10 +38,7 @@ export const registerUser = async (
  * @param {Object} options - Query options
  * @returns {Promise<QueryResult>}
  */
-export const queryUsers = async (
-  filter: Record<string, any>,
-  options: IOptions
-): Promise<QueryResult> => {
+export const queryUsers = async (filter: Record<string, any>, options: IOptions): Promise<QueryResult> => {
   const users = await User.paginate(filter, options)
 
   return users
@@ -61,17 +49,14 @@ export const queryUsers = async (
  * @param {mongoose.Types.ObjectId} id
  * @returns {Promise<IUserDoc | null>}
  */
-export const getUserById = async (
-  id: mongoose.Types.ObjectId
-): Promise<IUserDoc | null> => User.findById(id)
+export const getUserById = async (id: mongoose.Types.ObjectId): Promise<IUserDoc | null> => User.findById(id)
 
 /**
  * Get user by email
  * @param {string} email
  * @returns {Promise<IUserDoc | null>}
  */
-export const getUserByEmail = async (email: string): Promise<IUserDoc | null> =>
-  User.findOne({ email })
+export const getUserByEmail = async (email: string): Promise<IUserDoc | null> => User.findOne({ email })
 
 /**
  * Update user by id
@@ -103,9 +88,7 @@ export const updateUserById = async (
  * @param {mongoose.Types.ObjectId} userId
  * @returns {Promise<IUserDoc | null>}
  */
-export const deleteUserById = async (
-  userId: mongoose.Types.ObjectId
-): Promise<IUserDoc | null> => {
+export const deleteUserById = async (userId: mongoose.Types.ObjectId): Promise<IUserDoc | null> => {
   const user = await getUserById(userId)
 
   if (!user) {

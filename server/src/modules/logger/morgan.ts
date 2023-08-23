@@ -4,10 +4,7 @@ import { Request, Response } from 'express'
 import config from '../../config/config'
 import logger from './logger'
 
-morgan.token(
-  'message',
-  (_req: Request, res: Response) => res.locals['errorMessage'] || ''
-)
+morgan.token('message', (_req: Request, res: Response) => res.locals['errorMessage'] || '')
 
 const getIpFormat = () => (config.env === 'production' ? ':remote-addr - ' : '')
 const successResponseFormat = `${getIpFormat()}:method :url :status - :response-time ms`
@@ -23,7 +20,4 @@ const errorHandler = morgan(errorResponseFormat, {
   stream: { write: (message: string) => logger.error(message.trim()) }
 })
 
-export default {
-  successHandler,
-  errorHandler
-}
+export default { successHandler, errorHandler }

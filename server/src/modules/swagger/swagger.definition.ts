@@ -5,8 +5,7 @@ const swaggerDefinition = {
   info: {
     title: 'Imagery API documentation',
     version: '0.0.1',
-    description:
-      'Software that will help writers write both short stories and book series',
+    description: 'Software that will help writers write both short stories and book series',
     license: {
       name: 'Closed Source', // MIT
       url: 'https://github.com/betelgeuseAS/imagery.git'
