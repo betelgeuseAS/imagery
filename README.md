@@ -7,6 +7,7 @@
 ![open issues](https://img.shields.io/github/issues-raw/betelgeuseAS/imagery.svg)
 ![author](https://img.shields.io/badge/author-Andrew%20Samchuk-orange)
 
+To a greater or lesser extent, this project is subordinated to [monorepo](https://monorepo.tools/#local-computation-caching).
 ____
 
 ## Install & Run

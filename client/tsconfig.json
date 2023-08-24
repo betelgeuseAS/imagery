@@ -32,7 +32,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": false
   }
   // "include": ["src/**/*"] /* Specifies an array of filenames or patterns to include in the program. */,
   // "exclude": ["node_modules", "build"] /* Specifies an array of filenames or patterns that should be skipped when resolving include. */
