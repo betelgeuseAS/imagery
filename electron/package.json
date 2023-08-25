@@ -6,7 +6,7 @@
   "author": "Andrew Samchuk",
   "license": "Closed Source",
   "productName": "Imagery",
-  "main": "build/src/app.js",
+  "main": "build/app.js",
   "scripts": {
     "start": "npm run build && electron ./ --serve",
     "lint": "eslint .",

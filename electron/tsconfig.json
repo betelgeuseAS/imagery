@@ -2,8 +2,8 @@
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
-    "target": "es2022",
-    "module": "esnext",
+    "target": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./build",
     "rootDir": "./src",
