@@ -1,37 +1,53 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
+import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+
+import { CssBaseline } from '@mui/material'
+
+import Layout from './components/layout'
+import RequireUser from './components/requireUser'
+import ProfilePage from './pages/profile.page'
+import HomePage from './pages/home.page'
+import LoginPage from './pages/login.page'
+import RegisterPage from './pages/register.page'
+import UnauthorizePage from './pages/unauthorize.page'
+import AdminPage from './pages/admin.page'
+import EmailVerificationPage from './pages/verifyemail.page'
+import ResetPasswordPage from './pages/reset-password.page'
+import ForgotPasswordPage from './pages/forgot-password.page'
+
 import 'react-toastify/dist/ReactToastify.css'
 
-// import {Typography} from '@mui/material'
-
-import Header from './components/Header'
-import Dashboard from './pages/Dashboard'
-import Login from './pages/Login'
-import Register from './pages/Register'
-
-export const App = (): JSX.Element => {
+const App = (): JSX.Element => {
   return (
     <>
-      <Router>
-        <div className='container'>
-          <Header />
-
-          <Routes>
-            <Route path='/' element={<Dashboard />} />
-
-            <Route path='/login' element={<Login />} />
-
-            <Route path='/register' element={<Register />} />
-          </Routes>
-        </div>
-      </Router>
-
-      {/*<Typography variant='h1' gutterBottom>*/}
-      {/*  h1. Heading*/}
-      {/*</Typography>*/}
-
+      <CssBaseline />
       <ToastContainer />
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+
+          {/* Private Route */}
+          <Route element={<RequireUser allowedRoles={['user', 'admin']} />}>
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+          <Route element={<RequireUser allowedRoles={['admin']} />}>
+            <Route path="admin" element={<AdminPage />} />
+          </Route>
+          <Route path="unauthorized" element={<UnauthorizePage />} />
+        </Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="verifyemail" element={<EmailVerificationPage />}>
+          <Route path=":verificationCode" element={<EmailVerificationPage />} />
+        </Route>
+        <Route path="forgotpassword" element={<ForgotPasswordPage />} />
+        <Route path="resetpassword" element={<ResetPasswordPage />}>
+          <Route path=":resetToken" element={<ResetPasswordPage />} />
+        </Route>
+      </Routes>
     </>
   )
 }
+
+export default App

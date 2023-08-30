@@ -1,20 +1,31 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ThemeProvider } from '@mui/material/styles'
+import { CookiesProvider } from 'react-cookie'
 
-import { store } from './app/store'
+import { store } from './redux/store'
+import { theme } from './mui/theme'
 
-import { App } from './App'
+import AuthMiddleware from './Helpers/AuthMiddleware'
+import App from './App'
 
-import './index.css'
-
-const container = document.getElementById('root')!
+const container = document.getElementById('root')! as HTMLElement
 const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <CookiesProvider>
+            <AuthMiddleware>
+              <App />
+            </AuthMiddleware>
+          </CookiesProvider>
+        </Router>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 )
