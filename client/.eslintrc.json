@@ -25,8 +25,19 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["error", { "printWidth": 120 }],
+    "no-unused-vars": "off",
+    "jsx-quotes": ["error", "prefer-double"],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "jsxSingleQuote": false
+      }
+    ],
     "@typescript-eslint/triple-slash-reference": "off",
-    "react/react-in-jsx-scope": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   }
 }
