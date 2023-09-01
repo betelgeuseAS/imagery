@@ -1,6 +1,9 @@
+import { useMemo } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
+import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 
 import Layout from './components/layout'
@@ -15,19 +18,23 @@ import EmailVerificationPage from './pages/verifyemail.page'
 import ResetPasswordPage from './pages/reset-password.page'
 import ForgotPasswordPage from './pages/forgot-password.page'
 
+import { createDesign } from './mui/theme'
+import { RootState } from './redux/store'
+
 import 'react-toastify/dist/ReactToastify.css'
 
 const App = (): JSX.Element => {
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const theme = useMemo(() => createDesign(themeMode), [themeMode])
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToastContainer />
 
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-
-          {/* Private Route */}
           <Route element={<RequireUser allowedRoles={['user', 'admin']} />}>
             <Route path="profile" element={<ProfilePage />} />
           </Route>
@@ -36,6 +43,7 @@ const App = (): JSX.Element => {
           </Route>
           <Route path="unauthorized" element={<UnauthorizePage />} />
         </Route>
+
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="verifyemail" element={<EmailVerificationPage />}>
@@ -46,7 +54,7 @@ const App = (): JSX.Element => {
           <Route path=":resetToken" element={<ResetPasswordPage />} />
         </Route>
       </Routes>
-    </>
+    </ThemeProvider>
   )
 }
 

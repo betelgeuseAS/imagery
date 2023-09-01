@@ -1,5 +1,5 @@
 import { createTheme, PaletteColor, SimplePaletteColorOptions, Theme, ThemeOptions } from '@mui/material/styles'
-import { colors } from '@mui/material'
+import { colors, PaletteMode } from '@mui/material'
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -25,30 +25,34 @@ declare module '@mui/material/styles' {
   }
 }
 
-export const theme = createTheme({
-  text: {
-    primary: {
-      fontSize: 16,
-      color: colors.blue[400]
-    }
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontSize: 12,
-          background: 'hsl(171, 66%, 44%)'
+export const createDesign = (themeMode: PaletteMode) => {
+  const themeOptions: ThemeOptions = {
+    text: {
+      primary: {
+        fontSize: 16,
+        color: colors.blue[400]
+      }
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontSize: 12,
+            background: 'hsl(171, 66%, 44%)'
+          }
         }
       }
+    },
+    palette: {
+      mode: themeMode,
+      primary: { main: 'hsl(171, 66%, 44%)' },
+      accent: { main: 'hsl(171, 66%, 44%)' }
+    },
+    typography: {
+      fontFamily: ['Poppins', 'sans-serif'].join(','),
+      fontSize: 12
     }
-  },
-  palette: {
-    primary: { main: 'hsl(171, 66%, 44%)' },
-    accent: { main: 'hsl(171, 66%, 44%)' }
-  },
-  typography: {
-    fontFamily: ['Poppins', 'sans-serif'].join(','),
-    fontSize: 12
-  },
-  spacing: 4
-})
+  }
+
+  return createTheme(themeOptions)
+}

@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles'
 import { useLoginUserMutation } from '../redux/api/authApi'
 
 import FormInput from '../components/FormInput'
+import { SwitchTheme } from '../components/SwitchTheme'
 
 const LoadingButton = styled(_LoadingButton)`
   padding: 0.6rem 0;
@@ -96,10 +97,12 @@ const LoginPage = () => {
     <Container disableGutters>
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          image
+          {/*<Box sx={}></Box>*/}
         </Grid>
         <Grid item xs={4}>
           <Box>
+            <SwitchTheme />
+
             <Typography variant="h3" gutterBottom>
               Welcome to Imagery! 👋
             </Typography>
