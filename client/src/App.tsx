@@ -18,7 +18,7 @@ import EmailVerificationPage from './pages/verifyemail.page'
 import ResetPasswordPage from './pages/reset-password.page'
 import ForgotPasswordPage from './pages/forgot-password.page'
 
-import { createDesign } from './mui/theme'
+import { createDesign } from './mui'
 import { RootState } from './redux/store'
 
 import 'react-toastify/dist/ReactToastify.css'

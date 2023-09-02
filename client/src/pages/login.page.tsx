@@ -1,38 +1,26 @@
 import { useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 
-import { Box, Container, Typography, Grid } from '@mui/material'
-import { LoadingButton as _LoadingButton } from '@mui/lab'
-import { styled } from '@mui/material/styles'
+import { Box, Container, Typography, Grid, Alert, Link as MUILink } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { Image } from 'mui-image'
 
+import { createStyles, createComponents } from '../mui'
 import { useLoginUserMutation } from '../redux/api/authApi'
 
 import FormInput from '../components/FormInput'
+import FormInputPassword from '../components/FormInputPassword'
+import FormCheckbox from '../components/FormCheckbox'
 import { SwitchTheme } from '../components/SwitchTheme'
 
-const LoadingButton = styled(_LoadingButton)`
-  padding: 0.6rem 0;
-  background-color: #f9d13e;
-  color: #2363eb;
-  font-weight: 500;
-
-  &:hover {
-    background-color: #ebc22c;
-    transform: translateY(-2px);
-  }
-`
-
-const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: #2363eb;
-  &:hover {
-    text-decoration: underline;
-  }
-`
+import facebookSocialImage from '../assets/social/facebook.png'
+import twitterSocialImage from '../assets/social/twitter.png'
+import githubSocialImage from '../assets/social/github.png'
+import googleSocialImage from '../assets/social/google.png'
 
 const loginSchema = object({
   email: string().min(1, 'Email address is required').email('Email Address is invalid'),
@@ -45,6 +33,9 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>
 
 const LoginPage = () => {
+  const styles = createStyles()
+  const { LinkItem } = createComponents()
+
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema)
   })
@@ -96,17 +87,24 @@ const LoginPage = () => {
   return (
     <Container disableGutters>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           {/*<Box sx={}></Box>*/}
         </Grid>
-        <Grid item xs={4}>
-          <Box>
-            <SwitchTheme />
 
-            <Typography variant="h3" gutterBottom>
+        <Grid item xs={5}>
+          <Box>
+            {/*<SwitchTheme />*/}
+
+            <Typography variant="h5" gutterBottom>
               Welcome to Imagery! 👋
             </Typography>
             <Typography gutterBottom>Please sign-in to your account and start the adventure</Typography>
+
+            <Alert icon={false} color="error" sx={{ my: 2 }}>
+              Admin: <strong>admin_user@gmail.com</strong> / Password: <strong>password123</strong>
+              <br />
+              User: <strong>...</strong> / Password: <strong>...</strong>
+            </Alert>
 
             <FormProvider {...methods}>
               <Box
@@ -115,32 +113,43 @@ const LoginPage = () => {
                 noValidate
                 autoComplete="off"
                 maxWidth="27rem"
-                width="100%"
-                sx={{
-                  backgroundColor: '#e5e7eb',
-                  p: 3,
-                  borderRadius: 2
-                }}>
-                <FormInput name="email" label="Email Address" type="email" />
-                <FormInput name="password" label="Password" type="password" />
+                width="100%">
+                <FormInput name="email" label="Email" type="email" size="small" autoFocus />
+                <FormInputPassword name="password" label="Password" size="small" />
 
-                <Typography sx={{ fontSize: '0.9rem', mb: '1rem', textAlign: 'right' }}>
-                  <LinkItem to="/forgotpassword">Forgot Password?</LinkItem>
-                </Typography>
+                <Box sx={styles.flexBetweenCenter}>
+                  <FormCheckbox name="remember" label="Remember Me" />
 
-                <LoadingButton
-                  variant="contained"
-                  sx={{ mt: 1 }}
-                  fullWidth
-                  disableElevation
-                  type="submit"
-                  loading={isLoading}>
+                  <LinkItem to="/forgotpassword">
+                    <Typography>Forgot Password?</Typography>
+                  </LinkItem>
+                </Box>
+
+                <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
                   Login
                 </LoadingButton>
 
-                <Typography sx={{ mt: 2 }}>
-                  Need an account? <LinkItem to="/register">Sign Up</LinkItem>
+                <Typography align="center" sx={{ my: 2 }}>
+                  New on our platform? <LinkItem to="/register">Create an account</LinkItem>
                 </Typography>
+                <Typography align="center" sx={{ mb: 2 }}>
+                  or
+                </Typography>
+
+                <Box sx={{ ...styles.flexCenterCenter, gap: 2 }}>
+                  <MUILink href="#">
+                    <Image src={facebookSocialImage} width="15px" duration={0} />
+                  </MUILink>
+                  <MUILink href="#">
+                    <Image src={twitterSocialImage} width="15px" duration={0} />
+                  </MUILink>
+                  <MUILink href="#">
+                    <Image src={githubSocialImage} width="15px" duration={0} />
+                  </MUILink>
+                  <MUILink href="#">
+                    <Image src={googleSocialImage} width="15px" duration={0} />
+                  </MUILink>
+                </Box>
               </Box>
             </FormProvider>
           </Box>
