@@ -5,7 +5,7 @@ import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 
-import { Box, Container, Typography, Grid, Alert, Link as MUILink } from '@mui/material'
+import { Box, Container, Typography, Grid, Alert, Link as MUILink, Divider, IconButton } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
@@ -17,6 +17,7 @@ import FormInputPassword from '../components/FormInputPassword'
 import FormCheckbox from '../components/FormCheckbox'
 import { SwitchTheme } from '../components/SwitchTheme'
 
+import natureMountingImage from '../assets/nature/nature_maunting.jpg'
 import facebookSocialImage from '../assets/social/facebook.png'
 import twitterSocialImage from '../assets/social/twitter.png'
 import githubSocialImage from '../assets/social/github.png'
@@ -40,7 +41,6 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema)
   })
 
-  // 👇 API Login Mutation
   const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation()
 
   const navigate = useNavigate()
@@ -59,6 +59,7 @@ const LoginPage = () => {
       toast.success('You successfully logged in')
       navigate(from)
     }
+
     if (isError) {
       if (Array.isArray((error as any).data.error)) {
         ;(error as any).data.error.forEach((el: any) =>
@@ -88,13 +89,27 @@ const LoginPage = () => {
     <Container disableGutters>
       <Grid container spacing={2}>
         <Grid item xs={7}>
-          {/*<Box sx={}></Box>*/}
+          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
+            <Box
+              sx={{
+                ...styles.flexStartCenter,
+                position: 'absolute',
+                top: 31,
+                left: 8,
+                zIndex: 100,
+                backgroundColor: 'background.default',
+                borderRadius: 2,
+                p: 1
+              }}>
+              <SwitchTheme />
+            </Box>
+
+            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
+          </Box>
         </Grid>
 
-        <Grid item xs={5}>
+        <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
           <Box>
-            {/*<SwitchTheme />*/}
-
             <Typography variant="h5" gutterBottom>
               Welcome to Imagery! 👋
             </Typography>
@@ -103,7 +118,7 @@ const LoginPage = () => {
             <Alert icon={false} color="error" sx={{ my: 2 }}>
               Admin: <strong>admin_user@gmail.com</strong> / Password: <strong>password123</strong>
               <br />
-              User: <strong>...</strong> / Password: <strong>...</strong>
+              User: <strong>user@gmail.com</strong> / Password: <strong>password123</strong>
             </Alert>
 
             <FormProvider {...methods}>
@@ -132,23 +147,30 @@ const LoginPage = () => {
                 <Typography align="center" sx={{ my: 2 }}>
                   New on our platform? <LinkItem to="/register">Create an account</LinkItem>
                 </Typography>
-                <Typography align="center" sx={{ mb: 2 }}>
-                  or
-                </Typography>
 
-                <Box sx={{ ...styles.flexCenterCenter, gap: 2 }}>
-                  <MUILink href="#">
+                <Box textAlign="center" sx={{ mb: 1 }}>
+                  <Divider />
+
+                  <Typography
+                    align="center"
+                    sx={{ mt: -1.5, mx: 'auto', backgroundColor: 'background.default', width: '70px' }}>
+                    or
+                  </Typography>
+                </Box>
+
+                <Box sx={{ ...styles.flexCenterCenter }}>
+                  <IconButton component={MUILink} href="#">
                     <Image src={facebookSocialImage} width="15px" duration={0} />
-                  </MUILink>
-                  <MUILink href="#">
+                  </IconButton>
+                  <IconButton component={MUILink} href="#">
                     <Image src={twitterSocialImage} width="15px" duration={0} />
-                  </MUILink>
-                  <MUILink href="#">
+                  </IconButton>
+                  <IconButton component={MUILink} href="#">
                     <Image src={githubSocialImage} width="15px" duration={0} />
-                  </MUILink>
-                  <MUILink href="#">
+                  </IconButton>
+                  <IconButton component={MUILink} href="#">
                     <Image src={googleSocialImage} width="15px" duration={0} />
-                  </MUILink>
+                  </IconButton>
                 </Box>
               </Box>
             </FormProvider>

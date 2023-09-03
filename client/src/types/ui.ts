@@ -9,6 +9,7 @@ type SxPropsOptional = SxProps<Theme> | undefined
 
 export interface IStyles {
   flexBetweenCenter: SxPropsOptional
+  flexStartCenter: SxPropsOptional
   flexCenterCenter: SxPropsOptional
 }
 

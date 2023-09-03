@@ -6,6 +6,7 @@ export const createStyles = (themeMode?: PaletteMode): IStyles => {
   return {
     // Flex
     flexBetweenCenter: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1 },
+    flexStartCenter: { display: 'flex', justifyContent: 'start', alignItems: 'center', gap: 1 },
     flexCenterCenter: { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }
   }
 }

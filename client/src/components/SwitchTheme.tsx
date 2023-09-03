@@ -23,7 +23,7 @@ export const SwitchTheme: React.FC = () => {
 
   return (
     <Box>
-      <IconButton sx={{ ml: 1 }} onClick={handleToggleTheme} color="inherit">
+      <IconButton onClick={handleToggleTheme} color="inherit">
         {themeMode === constants.THEME.DARK ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
     </Box>
