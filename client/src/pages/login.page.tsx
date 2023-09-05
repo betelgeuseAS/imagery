@@ -29,6 +29,8 @@ const loginSchema = object({
     .min(1, 'Password is required')
     .min(8, 'Password must be more than 8 characters')
     .max(32, 'Password must be less than 32 characters')
+    .regex(/\d/, 'Password must contain at least 1 letter and 1 number')
+    .regex(/[a-zA-Z]/, 'Password must contain at least 1 letter and 1 number')
 })
 
 export type LoginInput = TypeOf<typeof loginSchema>
