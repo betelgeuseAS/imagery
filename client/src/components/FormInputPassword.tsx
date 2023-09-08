@@ -48,7 +48,11 @@ const FormInputPassword: FC<IFormInputPasswordProps> = ({ name, label, ...otherP
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} edge="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  size="small"
+                  edge="end">
                   {showPassword ? <VisibilityOffOutlinedIcon /> : <VisibilityOutlinedIcon />}
                 </IconButton>
               </InputAdornment>

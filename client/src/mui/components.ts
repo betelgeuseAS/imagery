@@ -7,7 +7,7 @@ import { IComponents } from '../types'
 
 const LinkItem = styled(Link)`
   text-decoration: none;
-  color: ${colors.purple[500]};
+  color: ${colors.purple[400]};
   &:hover {
     text-decoration: underline;
   }

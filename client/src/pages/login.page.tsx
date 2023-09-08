@@ -4,6 +4,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 import { Box, Container, Typography, Grid, Alert, Link as MUILink, Divider, IconButton } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
@@ -16,6 +17,7 @@ import FormInput from '../components/FormInput'
 import FormInputPassword from '../components/FormInputPassword'
 import FormCheckbox from '../components/FormCheckbox'
 import { SwitchTheme } from '../components/SwitchTheme'
+import { Localization } from '../components/Localization'
 
 import natureMountingImage from '../assets/nature/nature_maunting.jpg'
 import facebookSocialImage from '../assets/social/facebook.png'
@@ -38,6 +40,8 @@ export type LoginInput = TypeOf<typeof loginSchema>
 const LoginPage = () => {
   const styles = createStyles()
   const { LinkItem } = createComponents()
+
+  const { t } = useTranslation()
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema)
@@ -104,6 +108,8 @@ const LoginPage = () => {
                 p: 1
               }}>
               <SwitchTheme />
+
+              <Localization />
             </Box>
 
             <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
@@ -113,9 +119,9 @@ const LoginPage = () => {
         <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
           <Box>
             <Typography variant="h5" gutterBottom>
-              Welcome to Imagery! 👋
+              {t('welcome')}
             </Typography>
-            <Typography gutterBottom>Please sign-in to your account and start the adventure</Typography>
+            <Typography gutterBottom>{t('sigh_in_label')}</Typography>
 
             <Alert icon={false} color="error" sx={{ my: 2 }}>
               Admin: <strong>admin_user@gmail.com</strong> / Password: <strong>password123</strong>
@@ -131,23 +137,23 @@ const LoginPage = () => {
                 autoComplete="off"
                 maxWidth="27rem"
                 width="100%">
-                <FormInput name="email" label="Email" type="email" size="small" autoFocus />
-                <FormInputPassword name="password" label="Password" size="small" />
+                <FormInput name="email" label={t('email')} type="email" size="small" autoFocus />
+                <FormInputPassword name="password" label={t('password')} size="small" />
 
                 <Box sx={styles.flexBetweenCenter}>
-                  <FormCheckbox name="remember" label="Remember Me" />
+                  <FormCheckbox name="remember" label={t('remember_me')} />
 
                   <LinkItem to="/forgotpassword">
-                    <Typography>Forgot Password?</Typography>
+                    <Typography>{t('forgot_password')}?</Typography>
                   </LinkItem>
                 </Box>
 
                 <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                  Login
+                  {t('login')}
                 </LoadingButton>
 
                 <Typography align="center" sx={{ my: 2 }}>
-                  New on our platform? <LinkItem to="/register">Create an account</LinkItem>
+                  {t('new_on_platform')}? <LinkItem to="/register">{t('create_account')}</LinkItem>
                 </Typography>
 
                 <Box textAlign="center" sx={{ mb: 1 }}>
@@ -156,7 +162,7 @@ const LoginPage = () => {
                   <Typography
                     align="center"
                     sx={{ mt: -1.5, mx: 'auto', backgroundColor: 'background.default', width: '70px' }}>
-                    or
+                    {t('or')}
                   </Typography>
                 </Box>
 
