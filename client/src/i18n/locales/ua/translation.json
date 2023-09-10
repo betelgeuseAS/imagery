@@ -1,0 +1,32 @@
+{
+  "auth": {
+    "welcome": "Ласкаво просимо до {{name}}! \uD83D\uDC4B",
+    "sigh_in_label": "Будь ласка, увійдіть до свого облікового запису та розпочніть пригоду",
+    "sigh_up_label": "Зареєструйтеся щоб розпочати",
+    "remember_me": "Запам'ятати мене",
+    "forgot_password": "Забули пароль",
+    "new_on_platform": "Вперше на нашій платформі",
+    "create_account": "Створити профіль",
+    "already_have_account": "Вже маєте обліковий запис",
+    "login_here": "Увійдіть тут",
+    "login": "Увійти",
+    "signup": "Зареєструватися"
+  },
+  "forms": {
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "confirm_password": "Підтвердити пароль",
+    "full_name": "Повне ім'я"
+  },
+  "validation": {
+    "email_required": "Потрібна адреса електронної пошти",
+    "email_invalid": "Адреса електронної пошти невірна",
+    "password_required": "Потрібен пароль",
+    "password_more": "Пароль має бути довшим за {{number}} символів",
+    "password_less": "Пароль має бути меншим за {{number}} символів",
+    "contains_letter_number": "Пароль повинен містити принаймні {{letter}} літеру та {{number}} цифру"
+  },
+  "other": {
+    "or": "або"
+  }
+}

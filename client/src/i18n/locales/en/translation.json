@@ -1,0 +1,32 @@
+{
+  "auth": {
+    "welcome": "Welcome to {{name}}! \uD83D\uDC4B",
+    "sigh_in_label": "Please sign-in to your account and start the adventure",
+    "sigh_up_label": "Sign-up To get started",
+    "remember_me": "Remember Me",
+    "forgot_password": "Forgot Password",
+    "new_on_platform": "New on our platform",
+    "create_account": "Create an account",
+    "already_have_account": "Already have an account",
+    "login_here": "Login here",
+    "login": "Login",
+    "signup": "Signup"
+  },
+  "forms": {
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "full_name": "Full Name"
+  },
+  "validation": {
+    "email_required": "Email address is required",
+    "email_invalid": "Email address is invalid",
+    "password_required": "Password is required",
+    "password_more": "Password must be more than {{number}} characters",
+    "password_less": "Password must be less than {{number}} characters",
+    "contains_letter_number": "Password must contain at least {{letter}} letter and {{number}} number"
+  },
+  "other": {
+    "or": "or"
+  }
+}
