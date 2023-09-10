@@ -21,9 +21,8 @@
     "outDir": "build",
     "rootDir": "./src",
     "paths": {
-      "*": ["node_modules/*"],
-      "@assets/*": ["src/assets/*"],
-      "@src/*": ["src/*"] // "./src/*"
+      // "*": ["node_modules/*"],
+      // "@assets/*": ["src/assets/*"]
     },
     "noImplicitAny": true,
     "noUnusedLocals": true,
