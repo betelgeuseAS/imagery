@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
 
-import './i18n/localization'
+import './i18n/config'
 import { store } from './redux/store'
 
 import AuthMiddleware from './Helpers/AuthMiddleware'
