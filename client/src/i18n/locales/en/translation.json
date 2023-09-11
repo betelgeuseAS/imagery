@@ -20,11 +20,15 @@
   },
   "validation": {
     "email_required": "Email address is required",
-    "email_invalid": "Email address is invalid",
     "password_required": "Password is required",
-    "password_more": "Password must be more than {{number}} characters",
-    "password_less": "Password must be less than {{number}} characters",
-    "contains_letter_number": "Password must contain at least {{letter}} letter and {{number}} number"
+    "full_name_required": "Full name is required",
+    "email_invalid": "Email address is invalid",
+    "password_not_match": "Passwords do not match",
+    "password_more": "Password must be more than {{number}} character(s)",
+    "password_less": "Password must be less than {{number}} character(s)",
+    "password_confirm": "Confirm your password",
+    "full_name_less": "Password must be less than {{number}} character(s)",
+    "contains_letter_number": "Password must contain at least {{letter}} letter(s) and {{number}} number(s)"
   },
   "other": {
     "or": "or"

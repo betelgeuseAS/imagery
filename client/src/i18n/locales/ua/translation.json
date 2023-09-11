@@ -19,12 +19,16 @@
     "full_name": "Повне ім'я"
   },
   "validation": {
-    "email_required": "Потрібна адреса електронної пошти",
+    "email_required": "Необхідна адреса електронної пошти",
+    "password_required": "Необхідний пароль",
+    "full_name_required": "Необхідно вказати повне ім'я",
     "email_invalid": "Адреса електронної пошти невірна",
-    "password_required": "Потрібен пароль",
-    "password_more": "Пароль має бути довшим за {{number}} символів",
-    "password_less": "Пароль має бути меншим за {{number}} символів",
-    "contains_letter_number": "Пароль повинен містити принаймні {{letter}} літеру та {{number}} цифру"
+    "password_not_match": "Паролі не збігаються",
+    "password_more": "Пароль має бути довшим за {{number}} символ(ів)",
+    "password_less": "Пароль має бути меншим за {{number}} символ(ів)",
+    "password_confirm": "Підтвердіть ваш пароль",
+    "full_name_less": "Пароль має бути меншим за {{number}} символ(ів)",
+    "contains_letter_number": "Пароль повинен містити щонайменше {{letter}} літер(и) та {{number}} цифр(и)"
   },
   "other": {
     "or": "або"
