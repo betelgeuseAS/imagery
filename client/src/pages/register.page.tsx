@@ -1,56 +1,54 @@
-import { Box, Container, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { FC, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import FormInput from '../components/FormInput'
-import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useRegisterUserMutation } from '../redux/api/authApi'
-import { LoadingButton as _LoadingButton } from '@mui/lab'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
-const LoadingButton = styled(_LoadingButton)`
-  padding: 0.6rem 0;
-  background-color: #f9d13e;
-  color: #2363eb;
-  font-weight: 500;
+import { Box, Container, Grid, Typography } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { Image } from 'mui-image'
 
-  &:hover {
-    background-color: #ebc22c;
-    transform: translateY(-2px);
-  }
-`
+import i18next from '../i18n/config'
+import { createComponents, createStyles } from '../mui'
+import { useRegisterUserMutation } from '../redux/api/authApi'
 
-const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: #2363eb;
-  &:hover {
-    text-decoration: underline;
-  }
-`
+import FormInput from '../components/FormInput'
+import FormInputPassword from '../components/FormInputPassword'
+import { SwitchTheme } from '../components/SwitchTheme'
+import { Localization } from '../components/Localization'
+
+import natureMountingImage from '../assets/nature/nature_maunting.jpg'
 
 const registerSchema = object({
-  name: string().min(1, 'Full name is required').max(100),
-  email: string().min(1, 'Email address is required').email('Email Address is invalid'),
+  name: string().min(1, i18next.t('validation.full_name_required')).max(100, i18next.t('validation.full_name_less')),
+  email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
   password: string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must be more than 8 characters')
-    .max(32, 'Password must be less than 32 characters'),
-  passwordConfirm: string().min(1, 'Please confirm your password')
+    .min(1, i18next.t('validation.password_required'))
+    .min(8, i18next.t('validation.password_more', { number: 8 }))
+    .max(32, i18next.t('validation.password_less', { number: 32 }))
+    .regex(/\d/, i18next.t('validation.contains_letter_number', { letter: 1, number: 1 }))
+    .regex(/[a-zA-Z]/, i18next.t('validation.contains_letter_number', { letter: 1, number: 1 })),
+  passwordConfirm: string().min(1, i18next.t('validation.password_confirm'))
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ['passwordConfirm'],
-  message: 'Passwords do not match'
+  // message: i18next.t('validation.password_not_match'),
+  params: { i18n: 'validation.password_not_match' }
 })
 
 export type RegisterInput = TypeOf<typeof registerSchema>
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
+  const styles = createStyles()
+  const { LinkItem } = createComponents()
+
+  const { t } = useTranslation()
+
   const methods = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema)
   })
 
-  // 👇 Calling the Register Mutation
   const [registerUser, { isLoading, isSuccess, error, isError, data }] = useRegisterUserMutation()
 
   const navigate = useNavigate()
@@ -89,76 +87,66 @@ const RegisterPage = () => {
   }, [isSubmitSuccessful])
 
   const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-    // 👇 Executing the RegisterUser Mutation
     registerUser(values)
   }
 
   return (
-    <Container
-      maxWidth={false}
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#2363eb'
-      }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}>
-        <Typography
-          textAlign="center"
-          component="h1"
-          sx={{
-            color: '#f9d13e',
-            fontSize: { xs: '2rem', md: '3rem' },
-            fontWeight: 600,
-            mb: 2,
-            letterSpacing: 1
-          }}>
-          Welcome to CodevoWeb!
-        </Typography>
-        <Typography component="h2" sx={{ color: '#e5e7eb', mb: 2 }}>
-          Sign Up To Get Started!
-        </Typography>
+    <Container disableGutters>
+      <Grid container spacing={2}>
+        <Grid item xs={7}>
+          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
+            <Box
+              sx={{
+                ...styles.flexStartCenter,
+                position: 'absolute',
+                top: 31,
+                left: 8,
+                zIndex: 100,
+                backgroundColor: 'background.default',
+                borderRadius: 2,
+                p: 1
+              }}>
+              <SwitchTheme />
 
-        <FormProvider {...methods}>
-          <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmitHandler)}
-            noValidate
-            autoComplete="off"
-            maxWidth="27rem"
-            width="100%"
-            sx={{
-              backgroundColor: '#e5e7eb',
-              p: { xs: '1rem', sm: '2rem' },
-              borderRadius: 2
-            }}>
-            <FormInput name="name" label="Full Name" />
-            <FormInput name="email" label="Email Address" type="email" />
-            <FormInput name="password" label="Password" type="password" />
-            <FormInput name="passwordConfirm" label="Confirm Password" type="password" />
-            <Typography sx={{ fontSize: '0.9rem', mb: '1rem' }}>
-              Already have an account? <LinkItem to="/login">Login Here</LinkItem>
-            </Typography>
+              <Localization />
+            </Box>
 
-            <LoadingButton
-              variant="contained"
-              sx={{ mt: 1 }}
-              fullWidth
-              disableElevation
-              type="submit"
-              loading={isLoading}>
-              Sign Up
-            </LoadingButton>
+            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
-        </FormProvider>
-      </Box>
+        </Grid>
+
+        <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
+          <Box>
+            <Typography variant="h5" gutterBottom>
+              {t('auth.welcome', { name: 'Imagery' })}
+            </Typography>
+            <Typography gutterBottom>{t('auth.sigh_up_label')}</Typography>
+
+            <FormProvider {...methods}>
+              <Box
+                component="form"
+                onSubmit={handleSubmit(onSubmitHandler)}
+                noValidate
+                autoComplete="off"
+                maxWidth="27rem"
+                width="100%">
+                <FormInput name="name" label={t('forms.full_name')} size="small" autoFocus />
+                <FormInput name="email" label={t('forms.email')} type="email" size="small" />
+                <FormInputPassword name="password" label={t('forms.password')} size="small" />
+                <FormInputPassword name="passwordConfirm" label={t('forms.confirm_password')} size="small" />
+
+                <Typography align="center" sx={{ mb: 2 }}>
+                  {t('auth.already_have_account')}? <LinkItem to="/login">{t('auth.login_here')}</LinkItem>
+                </Typography>
+
+                <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
+                  {t('auth.signup')}
+                </LoadingButton>
+              </Box>
+            </FormProvider>
+          </Box>
+        </Grid>
+      </Grid>
     </Container>
   )
 }

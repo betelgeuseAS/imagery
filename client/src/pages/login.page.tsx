@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
@@ -6,10 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Container, Typography, Grid, Alert, Link as MUILink, Divider, IconButton } from '@mui/material'
+import { Box, Container, Typography, Grid, Link as MUILink, Divider, IconButton } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
+import i18next from '../i18n/config'
 import { createStyles, createComponents } from '../mui'
 import { useLoginUserMutation } from '../redux/api/authApi'
 
@@ -26,18 +27,18 @@ import githubSocialImage from '../assets/social/github.png'
 import googleSocialImage from '../assets/social/google.png'
 
 const loginSchema = object({
-  email: string().min(1, 'Email address is required').email('Email Address is invalid'),
+  email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
   password: string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must be more than 8 characters')
-    .max(32, 'Password must be less than 32 characters')
-    .regex(/\d/, 'Password must contain at least 1 letter and 1 number')
-    .regex(/[a-zA-Z]/, 'Password must contain at least 1 letter and 1 number')
+    .min(1, i18next.t('validation.password_required'))
+    .min(8, i18next.t('validation.password_more', { number: 8 }))
+    .max(32, i18next.t('validation.password_less', { number: 32 }))
+    .regex(/\d/, i18next.t('validation.contains_letter_number', { letter: 1, number: 1 }))
+    .regex(/[a-zA-Z]/, i18next.t('validation.contains_letter_number', { letter: 1, number: 1 }))
 })
 
 export type LoginInput = TypeOf<typeof loginSchema>
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const styles = createStyles()
   const { LinkItem } = createComponents()
 
@@ -119,15 +120,9 @@ const LoginPage = () => {
         <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
           <Box>
             <Typography variant="h5" gutterBottom>
-              {t('welcome')}
+              {t('auth.welcome', { name: 'Imagery' })}
             </Typography>
-            <Typography gutterBottom>{t('sigh_in_label')}</Typography>
-
-            <Alert icon={false} color="error" sx={{ my: 2 }}>
-              Admin: <strong>admin_user@gmail.com</strong> / Password: <strong>password123</strong>
-              <br />
-              User: <strong>user@gmail.com</strong> / Password: <strong>password123</strong>
-            </Alert>
+            <Typography gutterBottom>{t('auth.sigh_in_label')}</Typography>
 
             <FormProvider {...methods}>
               <Box
@@ -137,23 +132,23 @@ const LoginPage = () => {
                 autoComplete="off"
                 maxWidth="27rem"
                 width="100%">
-                <FormInput name="email" label={t('email')} type="email" size="small" autoFocus />
-                <FormInputPassword name="password" label={t('password')} size="small" />
+                <FormInput name="email" label={t('forms.email')} type="email" size="small" autoFocus />
+                <FormInputPassword name="password" label={t('forms.password')} size="small" />
 
                 <Box sx={styles.flexBetweenCenter}>
-                  <FormCheckbox name="remember" label={t('remember_me')} />
+                  <FormCheckbox name="remember" label={t('auth.remember_me')} />
 
                   <LinkItem to="/forgotpassword">
-                    <Typography>{t('forgot_password')}?</Typography>
+                    <Typography>{t('auth.forgot_password')}?</Typography>
                   </LinkItem>
                 </Box>
 
                 <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                  {t('login')}
+                  {t('auth.login')}
                 </LoadingButton>
 
                 <Typography align="center" sx={{ my: 2 }}>
-                  {t('new_on_platform')}? <LinkItem to="/register">{t('create_account')}</LinkItem>
+                  {t('auth.new_on_platform')}? <LinkItem to="/register">{t('auth.create_account')}</LinkItem>
                 </Typography>
 
                 <Box textAlign="center" sx={{ mb: 1 }}>
@@ -162,7 +157,7 @@ const LoginPage = () => {
                   <Typography
                     align="center"
                     sx={{ mt: -1.5, mx: 'auto', backgroundColor: 'background.default', width: '70px' }}>
-                    {t('or')}
+                    {t('other.or')}
                   </Typography>
                 </Box>
 
