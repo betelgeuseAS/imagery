@@ -1,14 +1,16 @@
+import { FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Box, IconButton, PaletteMode } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 
-import { constants } from '../constants'
 import type { RootState } from '../redux/store'
+import { constants } from '../constants'
+import { localStore } from '../services'
 import { toggleTheme } from '../redux/features/uiSlice'
 
-export const SwitchTheme: React.FC = () => {
+export const SwitchTheme: FC = () => {
   const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
   const dispatch = useDispatch()
 
@@ -18,7 +20,7 @@ export const SwitchTheme: React.FC = () => {
     ) as PaletteMode
 
     dispatch(toggleTheme(currentTheme))
-    localStorage.setItem('themeMode', currentTheme)
+    localStore.set('themeMode', currentTheme)
   }
 
   return (

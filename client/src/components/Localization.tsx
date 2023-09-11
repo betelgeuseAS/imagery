@@ -1,31 +1,25 @@
-import { useEffect } from 'react'
-import { useTranslation, Trans } from 'react-i18next'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { Box, ToggleButtonGroup, ToggleButton } from '@mui/material'
 
-export const Localization: React.FC = () => {
-  const { t, i18n } = useTranslation()
+import { constants } from '../constants'
+import { localStore } from '../services'
 
-  useEffect(() => {
-    const currentLanguage: string = localStorage.getItem('language') || 'en'
-
-    i18n.changeLanguage(currentLanguage)
-  }, [])
+export const Localization: FC = () => {
+  const { i18n } = useTranslation()
 
   const handleChangeLanguage = (event: React.MouseEvent<HTMLElement>, language: string) => {
     i18n.changeLanguage(language)
-    localStorage.setItem('language', language)
+    localStore.set('language', language)
   }
 
   return (
     <Box>
-      <ToggleButtonGroup value={i18n.language} color="primary" exclusive onChange={handleChangeLanguage}>
-        <ToggleButton value="en">EN</ToggleButton>
-        <ToggleButton value="ua">UA</ToggleButton>
+      <ToggleButtonGroup value={i18n.language} color="primary" size="small" exclusive onChange={handleChangeLanguage}>
+        <ToggleButton value={constants.LANGUAGE.ENGLISH}>EN</ToggleButton>
+        <ToggleButton value={constants.LANGUAGE.UKRAINIAN}>UA</ToggleButton>
       </ToggleButtonGroup>
-
-      {/*<Trans i18nKey="welcome">trans</Trans>*/}
-      {/*<h2>{t('welcome')}</h2>*/}
     </Box>
   )
 }

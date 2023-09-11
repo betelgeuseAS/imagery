@@ -4,9 +4,10 @@ import { PaletteMode } from '@mui/material'
 
 import { IUIState } from '../../types'
 import { constants } from '../../constants'
+import { localStore } from '../../services'
 
 const initialState: IUIState = {
-  themeMode: (localStorage.getItem('themeMode') || constants.THEME.LIGHT) as PaletteMode
+  themeMode: (localStore.get('themeMode') || constants.THEME.LIGHT) as PaletteMode
 }
 
 export const uiSlice = createSlice({

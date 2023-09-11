@@ -9,6 +9,9 @@ import translationZodUkrainian from 'zod-i18n-map/locales/uk-UA/zod.json'
 import translationEnglish from './locales/en/translation.json'
 import translationUkrainian from './locales/ua/translation.json'
 
+import { constants } from '../constants'
+import { localStore } from '../services'
+
 declare module 'react-i18next' {
   interface CustomTypeOptions {
     resources: {
@@ -19,8 +22,8 @@ declare module 'react-i18next' {
 }
 
 i18next.use(initReactI18next).init({
-  lng: localStorage.getItem('language') || 'en', // Try set z.setErrorMap in toggle language
-  fallbackLng: localStorage.getItem('language') || 'en',
+  lng: localStore.get('language') || constants.LANGUAGE.ENGLISH,
+  fallbackLng: localStore.get('language') || constants.LANGUAGE.ENGLISH,
   debug: false,
   resources: {
     en: {
