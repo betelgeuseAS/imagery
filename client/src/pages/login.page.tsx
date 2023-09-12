@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
@@ -11,6 +12,7 @@ import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
 import i18next from '../i18n/config'
+import { RootState } from '../redux/store'
 import { createStyles, createComponents } from '../mui'
 import { useLoginUserMutation } from '../redux/api/authApi'
 
@@ -39,8 +41,10 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>
 
 const LoginPage: FC = () => {
-  const styles = createStyles()
-  const { LinkItem } = createComponents()
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+
+  const styles = createStyles(themeMode)
+  const { LinkItem } = createComponents(themeMode)
 
   const { t } = useTranslation()
 
@@ -95,34 +99,14 @@ const LoginPage: FC = () => {
   return (
     <Container disableGutters>
       <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
-            <Box
-              sx={{
-                ...styles.flexStartCenter,
-                position: 'absolute',
-                top: 31,
-                left: 8,
-                zIndex: 100,
-                backgroundColor: 'background.default',
-                borderRadius: 2,
-                p: 1
-              }}>
-              <SwitchTheme />
-
-              <Localization />
-            </Box>
-
-            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
-          </Box>
-        </Grid>
-
-        <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
+        <Grid item xs={7} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
           <Box>
             <Typography variant="h5" gutterBottom>
-              {t('auth.welcome', { name: 'Imagery' })}
+              {t('auth.sign_in')}
             </Typography>
-            <Typography gutterBottom>{t('auth.sigh_in_label')}</Typography>
+            <Typography gutterBottom sx={{ color: 'text.disabled' }}>
+              {t('auth.sigh_in_label')}
+            </Typography>
 
             <FormProvider {...methods}>
               <Box
@@ -136,7 +120,7 @@ const LoginPage: FC = () => {
                 <FormInputPassword name="password" label={t('forms.password')} size="small" />
 
                 <Box sx={styles.flexBetweenCenter}>
-                  <FormCheckbox name="remember" label={t('auth.remember_me')} />
+                  <FormCheckbox name="remember" label={t('auth.sign_in_keep')} />
 
                   <LinkItem to="/forgotpassword">
                     <Typography>{t('auth.forgot_password')}?</Typography>
@@ -144,10 +128,10 @@ const LoginPage: FC = () => {
                 </Box>
 
                 <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                  {t('auth.login')}
+                  {t('auth.sign_in')}
                 </LoadingButton>
 
-                <Typography align="center" sx={{ my: 2 }}>
+                <Typography align="center" sx={{ color: 'text.disabled', my: 2 }}>
                   {t('auth.new_on_platform')}? <LinkItem to="/register">{t('auth.create_account')}</LinkItem>
                 </Typography>
 
@@ -156,8 +140,14 @@ const LoginPage: FC = () => {
 
                   <Typography
                     align="center"
-                    sx={{ mt: -1.5, mx: 'auto', backgroundColor: 'background.default', width: '70px' }}>
-                    {t('other.or')}
+                    sx={{
+                      color: 'text.disabled',
+                      backgroundColor: 'background.default',
+                      width: '70px',
+                      mt: -1.5,
+                      mx: 'auto'
+                    }}>
+                    {t('conjunction.or')}
                   </Typography>
                 </Box>
 
@@ -177,6 +167,28 @@ const LoginPage: FC = () => {
                 </Box>
               </Box>
             </FormProvider>
+          </Box>
+        </Grid>
+
+        <Grid item xs={5}>
+          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
+            <Box
+              sx={{
+                ...styles.flexStartCenter,
+                position: 'absolute',
+                top: 31,
+                left: 8,
+                zIndex: 100,
+                backgroundColor: 'background.default',
+                borderRadius: 2,
+                p: 1
+              }}>
+              <SwitchTheme />
+
+              <Localization />
+            </Box>
+
+            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
         </Grid>
       </Grid>
