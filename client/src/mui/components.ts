@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom'
 
-import { colors, PaletteMode } from '@mui/material'
+import { PaletteMode } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { IComponents } from '../types'
-
-const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: ${colors.purple[400]};
-  &:hover {
-    text-decoration: underline;
-  }
-`
+import { constants } from '../constants'
 
 export const createComponents = (themeMode?: PaletteMode): IComponents => {
   return {
-    LinkItem
+    LinkItem: styled(Link)`
+      text-decoration: underline;
+      color: ${themeMode === constants.THEME.LIGHT ? '#000000' : '#FFFFFF'};
+      &:hover {
+        text-decoration: underline;
+      }
+    `
   }
 }

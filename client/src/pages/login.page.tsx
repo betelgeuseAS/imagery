@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Container, Typography, Grid, Link as MUILink, Divider, IconButton } from '@mui/material'
+import { Box, Container, Typography, Grid, Link as MUILink, Divider, IconButton, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
@@ -22,11 +22,11 @@ import FormCheckbox from '../components/FormCheckbox'
 import { SwitchTheme } from '../components/SwitchTheme'
 import { Localization } from '../components/Localization'
 
+import iconImage from '../assets/logo/icon_128.png'
 import natureMountingImage from '../assets/nature/nature_maunting.jpg'
-import facebookSocialImage from '../assets/social/facebook.png'
-import twitterSocialImage from '../assets/social/twitter.png'
-import githubSocialImage from '../assets/social/github.png'
 import googleSocialImage from '../assets/social/google.png'
+import microsoftSocialImage from '../assets/social/microsoft.png'
+import appleSocialImage from '../assets/social/apple.png'
 
 const loginSchema = object({
   email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
@@ -99,94 +99,105 @@ const LoginPage: FC = () => {
   return (
     <Container disableGutters>
       <Grid container spacing={2}>
-        <Grid item xs={7} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
-          <Box>
-            <Typography variant="h5" gutterBottom>
-              {t('auth.sign_in')}
-            </Typography>
-            <Typography gutterBottom sx={{ color: 'text.disabled' }}>
-              {t('auth.sigh_in_label')}
-            </Typography>
+        <Grid item xs={7}>
+          <Box sx={{ ...styles.flexBetweenStart, flexDirection: 'column', gap: 2, height: 'calc(100vh - (24px * 2))' }}>
+            <Box sx={styles.flexStartCenter}>
+              <Image src={iconImage} width="25px" duration={0} />
 
-            <FormProvider {...methods}>
-              <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmitHandler)}
-                noValidate
-                autoComplete="off"
-                maxWidth="27rem"
-                width="100%">
-                <FormInput name="email" label={t('forms.email')} type="email" size="small" autoFocus />
-                <FormInputPassword name="password" label={t('forms.password')} size="small" />
+              <Typography variant="h5">Imagery</Typography>
+            </Box>
 
-                <Box sx={styles.flexBetweenCenter}>
-                  <FormCheckbox name="remember" label={t('auth.sign_in_keep')} />
+            <Box sx={{ maxWidth: '21rem', margin: '0 auto' }}>
+              <Typography variant="h5" gutterBottom>
+                {t('auth.sign_in')}
+              </Typography>
+              <Typography gutterBottom sx={{ color: 'text.disabled' }}>
+                {t('auth.sigh_in_label')}
+              </Typography>
 
-                  <LinkItem to="/forgotpassword">
-                    <Typography>{t('auth.forgot_password')}?</Typography>
-                  </LinkItem>
-                </Box>
+              <FormProvider {...methods}>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit(onSubmitHandler)}
+                  noValidate
+                  autoComplete="off"
+                  maxWidth="21rem"
+                  width="100%">
+                  <FormInput name="email" label={t('forms.email')} type="email" size="small" autoFocus />
+                  <FormInputPassword name="password" label={t('forms.password')} size="small" />
 
-                <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                  {t('auth.sign_in')}
-                </LoadingButton>
+                  <Box sx={styles.flexBetweenCenter}>
+                    <FormCheckbox name="remember" label={t('auth.sign_in_keep')} />
 
-                <Typography align="center" sx={{ color: 'text.disabled', my: 2 }}>
-                  {t('auth.new_on_platform')}? <LinkItem to="/register">{t('auth.create_account')}</LinkItem>
-                </Typography>
+                    <LinkItem to="/forgotpassword">
+                      <Typography>{t('auth.forgot_password')}?</Typography>
+                    </LinkItem>
+                  </Box>
 
-                <Box textAlign="center" sx={{ mb: 1 }}>
-                  <Divider />
+                  <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
+                    {t('auth.sign_in')}
+                  </LoadingButton>
 
-                  <Typography
-                    align="center"
-                    sx={{
-                      color: 'text.disabled',
-                      backgroundColor: 'background.default',
-                      width: '70px',
-                      mt: -1.5,
-                      mx: 'auto'
-                    }}>
-                    {t('conjunction.or')}
+                  <Typography align="center" sx={{ color: 'text.disabled', my: 2 }}>
+                    {t('auth.new_on_platform')}? <LinkItem to="/register">{t('auth.create_account')}</LinkItem>
                   </Typography>
-                </Box>
 
-                <Box sx={{ ...styles.flexCenterCenter }}>
-                  <IconButton component={MUILink} href="#">
-                    <Image src={facebookSocialImage} width="15px" duration={0} />
-                  </IconButton>
-                  <IconButton component={MUILink} href="#">
-                    <Image src={twitterSocialImage} width="15px" duration={0} />
-                  </IconButton>
-                  <IconButton component={MUILink} href="#">
-                    <Image src={githubSocialImage} width="15px" duration={0} />
-                  </IconButton>
-                  <IconButton component={MUILink} href="#">
-                    <Image src={googleSocialImage} width="15px" duration={0} />
-                  </IconButton>
+                  <Box textAlign="center" sx={{ mb: 1 }}>
+                    <Divider />
+
+                    <Typography
+                      align="center"
+                      sx={{
+                        color: 'text.disabled',
+                        backgroundColor: 'background.default',
+                        width: '70px',
+                        mt: -1.5,
+                        mx: 'auto'
+                      }}>
+                      {t('conjunction.or')}
+                    </Typography>
+                  </Box>
+
+                  <Box sx={{ ...styles.flexCenterCenter }}>
+                    <Button sx={styles.noHoverBackground}>
+                      <Image src={googleSocialImage} width="18px" duration={0} />
+                    </Button>
+                    <Button sx={styles.noHoverBackground}>
+                      <Image src={microsoftSocialImage} width="18px" duration={0} />
+                    </Button>
+                    <Button sx={styles.noHoverBackground}>
+                      <Image src={appleSocialImage} width="20px" duration={0} />
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            </FormProvider>
+              </FormProvider>
+            </Box>
+
+            <Box sx={styles.flexStartCenter}>
+              <SwitchTheme />
+
+              <Localization />
+            </Box>
           </Box>
         </Grid>
 
         <Grid item xs={5}>
           <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
-            <Box
-              sx={{
-                ...styles.flexStartCenter,
-                position: 'absolute',
-                top: 31,
-                left: 8,
-                zIndex: 100,
-                backgroundColor: 'background.default',
-                borderRadius: 2,
-                p: 1
-              }}>
-              <SwitchTheme />
+            {/*<Box*/}
+            {/*  sx={{*/}
+            {/*    ...styles.flexStartCenter,*/}
+            {/*    position: 'absolute',*/}
+            {/*    top: 31,*/}
+            {/*    left: 8,*/}
+            {/*    zIndex: 100,*/}
+            {/*    backgroundColor: 'background.default',*/}
+            {/*    borderRadius: 2,*/}
+            {/*    p: 1*/}
+            {/*  }}>*/}
+            {/*  <SwitchTheme />*/}
 
-              <Localization />
-            </Box>
+            {/*  <Localization />*/}
+            {/*</Box>*/}
 
             <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
