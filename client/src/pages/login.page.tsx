@@ -109,10 +109,10 @@ const LoginPage: FC = () => {
 
             <Box sx={{ maxWidth: '21rem', margin: '0 auto' }}>
               <Typography variant="h5" gutterBottom>
-                {t('auth.sign_in')}
+                {t('auth.log_in')}
               </Typography>
               <Typography gutterBottom sx={{ color: 'text.disabled' }}>
-                {t('auth.sigh_in_label')}
+                {t('auth.log_in_label')}
               </Typography>
 
               <FormProvider {...methods}>
@@ -127,7 +127,7 @@ const LoginPage: FC = () => {
                   <FormInputPassword name="password" label={t('forms.password')} size="small" />
 
                   <Box sx={styles.flexBetweenCenter}>
-                    <FormCheckbox name="remember" label={t('auth.sign_in_keep')} />
+                    <FormCheckbox name="remember" label={t('auth.log_in_keep')} />
 
                     <LinkItem to="/forgotpassword">
                       <Typography>{t('auth.forgot_password')}?</Typography>
@@ -135,7 +135,7 @@ const LoginPage: FC = () => {
                   </Box>
 
                   <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                    {t('auth.sign_in')}
+                    {t('auth.log_in')}
                   </LoadingButton>
 
                   <Typography align="center" sx={{ color: 'text.disabled', my: 2 }}>
@@ -183,22 +183,6 @@ const LoginPage: FC = () => {
 
         <Grid item xs={5}>
           <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
-            {/*<Box*/}
-            {/*  sx={{*/}
-            {/*    ...styles.flexStartCenter,*/}
-            {/*    position: 'absolute',*/}
-            {/*    top: 31,*/}
-            {/*    left: 8,*/}
-            {/*    zIndex: 100,*/}
-            {/*    backgroundColor: 'background.default',*/}
-            {/*    borderRadius: 2,*/}
-            {/*    p: 1*/}
-            {/*  }}>*/}
-            {/*  <SwitchTheme />*/}
-
-            {/*  <Localization />*/}
-            {/*</Box>*/}
-
             <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
         </Grid>

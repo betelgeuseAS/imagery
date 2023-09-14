@@ -21,6 +21,8 @@ import { Localization } from '../components/Localization'
 
 import natureMountingImage from '../assets/nature/nature_maunting.jpg'
 
+import iconImage from '../assets/logo/icon_128.png'
+
 const registerSchema = object({
   name: string().min(1, i18next.t('validation.full_name_required')).max(100, i18next.t('validation.full_name_less')),
   email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
@@ -94,56 +96,56 @@ const RegisterPage: FC = () => {
     <Container disableGutters>
       <Grid container spacing={2}>
         <Grid item xs={7}>
-          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
-            <Box
-              sx={{
-                ...styles.flexStartCenter,
-                position: 'absolute',
-                top: 31,
-                left: 8,
-                zIndex: 100,
-                backgroundColor: 'background.default',
-                borderRadius: 2,
-                p: 1
-              }}>
+          <Box sx={{ ...styles.flexBetweenStart, flexDirection: 'column', gap: 2, height: 'calc(100vh - (24px * 2))' }}>
+            <Box sx={styles.flexStartCenter}>
+              <Image src={iconImage} width="25px" duration={0} />
+
+              <Typography variant="h5">Imagery</Typography>
+            </Box>
+
+            <Box sx={{ maxWidth: '21rem', margin: '0 auto' }}>
+              <Typography variant="h5" gutterBottom>
+                {t('auth.sign_up')}
+              </Typography>
+              <Typography gutterBottom sx={{ color: 'text.disabled' }}>
+                {t('auth.sigh_up_label')}
+              </Typography>
+
+              <FormProvider {...methods}>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit(onSubmitHandler)}
+                  noValidate
+                  autoComplete="off"
+                  maxWidth="27rem"
+                  width="100%">
+                  <FormInput name="name" label={t('forms.full_name')} size="small" autoFocus />
+                  <FormInput name="email" label={t('forms.email')} type="email" size="small" />
+                  <FormInputPassword name="password" label={t('forms.password')} size="small" />
+                  <FormInputPassword name="passwordConfirm" label={t('forms.confirm_password')} size="small" />
+
+                  <Typography align="center" sx={{ color: 'text.disabled', mb: 2 }}>
+                    {t('auth.already_have_account')}? <LinkItem to="/login">{t('auth.log_in_here')}</LinkItem>
+                  </Typography>
+
+                  <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
+                    {t('auth.sign_up')}
+                  </LoadingButton>
+                </Box>
+              </FormProvider>
+            </Box>
+
+            <Box sx={styles.flexStartCenter}>
               <SwitchTheme />
 
               <Localization />
             </Box>
-
-            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
         </Grid>
 
-        <Grid item xs={5} sx={{ ...styles.flexCenterCenter, height: '100vh' }}>
-          <Box>
-            <Typography variant="h5" gutterBottom>
-              {t('auth.welcome', { name: 'Imagery' })}
-            </Typography>
-            <Typography gutterBottom>{t('auth.sigh_up_label')}</Typography>
-
-            <FormProvider {...methods}>
-              <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmitHandler)}
-                noValidate
-                autoComplete="off"
-                maxWidth="27rem"
-                width="100%">
-                <FormInput name="name" label={t('forms.full_name')} size="small" autoFocus />
-                <FormInput name="email" label={t('forms.email')} type="email" size="small" />
-                <FormInputPassword name="password" label={t('forms.password')} size="small" />
-                <FormInputPassword name="passwordConfirm" label={t('forms.confirm_password')} size="small" />
-
-                <Typography align="center" sx={{ mb: 2 }}>
-                  {t('auth.already_have_account')}? <LinkItem to="/login">{t('auth.login_here')}</LinkItem>
-                </Typography>
-
-                <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>
-                  {t('auth.signup')}
-                </LoadingButton>
-              </Box>
-            </FormProvider>
+        <Grid item xs={5}>
+          <Box sx={{ height: '100%', width: '100%', position: 'relative', py: 3 }}>
+            <Image src={natureMountingImage} duration={0} style={{ borderRadius: '8px' }} />
           </Box>
         </Grid>
       </Grid>
