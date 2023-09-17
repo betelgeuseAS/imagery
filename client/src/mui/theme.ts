@@ -11,19 +11,19 @@ declare module '@mui/material/styles' {
     // accent: SimplePaletteColorOptions
   }
   interface Theme {
-    text?: {
-      primary?: {
-        fontSize?: number
-      }
-    }
+    // text?: {
+    //   primary?: {
+    //     fontSize?: number
+    //   }
+    // }
   }
   interface ThemeOptions {
-    text?: {
-      primary?: {
-        fontSize?: React.CSSProperties['fontSize']
-        color?: React.CSSProperties['color']
-      }
-    }
+    // text?: {
+    //   primary?: {
+    //     fontSize?: React.CSSProperties['fontSize']
+    //     color?: React.CSSProperties['color']
+    //   }
+    // }
   }
   interface TypographyOptions {
     color?: React.CSSProperties['color']
@@ -32,12 +32,12 @@ declare module '@mui/material/styles' {
 
 export const createDesign = (themeMode: PaletteMode) => {
   const themeOptions: ThemeOptions = {
-    text: {
-      primary: {
-        fontSize: 12,
-        color: colors.blue[400]
-      }
-    },
+    // text: {
+    //   primary: {
+    //     fontSize: 12,
+    //     color: colors.blue[400]
+    //   }
+    // },
     components: {
       MuiCssBaseline: {
         styleOverrides: `h5 { font-weight: 600 !important; }`
@@ -45,19 +45,31 @@ export const createDesign = (themeMode: PaletteMode) => {
       MuiContainer: {
         styleOverrides: {
           root: {
-            padding: 8
+            padding: 24
           }
         }
       }
     },
     palette: {
       mode: themeMode,
-      // primary: { main: 'hsl(171, 66%, 44%)' },
-      // accent: { main: 'hsl(171, 66%, 44%)' },
+
+      // accent: { main: '' },
+      primary: { main: themeMode === constants.THEME.LIGHT ? '#666CFF' : '#7551FF' },
+      // secondary: { main: '' },
+      // error: { main: '' },
+      // warning: { main: '' },
+      // info: { main: '' },
+      // success: { main: '' },
+
+      background: {
+        default: themeMode === constants.THEME.LIGHT ? '#EEEEEE' : '#26244D'
+        // paper: ''
+      },
+
       text: {
-        // primary: themeMode === constants.THEME.LIGHT ? '#6d657b' : '#a9abc0',
+        // primary: '',
         // secondary: '',
-        // disabled: colors.purple[500]
+        disabled: '#878EB0'
       }
     },
     typography: {
