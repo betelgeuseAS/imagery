@@ -1,36 +1,53 @@
 {
   "auth": {
-    "welcome": "Welcome to {{name}}! \uD83D\uDC4B",
-    "sigh_in_label": "Please sign-in to your account and start the adventure",
-    "sigh_up_label": "Sign-up To get started",
-    "remember_me": "Remember Me",
-    "forgot_password": "Forgot Password",
-    "new_on_platform": "New on our platform",
+    "log_in": "Log In",
+    "log_in_label": "Log In to your account and start the adventure",
+    "log_in_keep": "Keep me logged in",
+    "log_in_here": "Log In here",
+    "back_to_log_in": "Back to Log In",
+
+    "sign_up": "Sign Up",
+    "sigh_up_label": "Sign up to get started",
+
+    "new_on_platform": "New on the platform",
     "create_account": "Create an account",
     "already_have_account": "Already have an account",
-    "login_here": "Login here",
-    "login": "Login",
-    "signup": "Signup"
+    "forgot_password": "Forgot password",
+    "retrieve_password": "Retrieve password",
+
+    "reset_password": "Forgot Password",
+    "reset_password_label": "Enter your email address and a password reset link will be sent to you",
+    "reset_password_sent": "A password recovery email has been sent to you",
+
+    "verification": "Verify Email Address",
+    "verification_label": "Enter the code that was sent to you",
+    "verify_email": "Verify email"
   },
   "forms": {
     "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm Password",
-    "full_name": "Full Name"
+    "full_name": "Full Name",
+    "verification_code": "Verification Code"
   },
   "validation": {
     "email_required": "Email address is required",
-    "password_required": "Password is required",
-    "full_name_required": "Full name is required",
     "email_invalid": "Email address is invalid",
+
+    "password_required": "Password is required",
     "password_not_match": "Passwords do not match",
+    "password_confirm": "Confirm your password",
     "password_more": "Password must be more than {{number}} character(s)",
     "password_less": "Password must be less than {{number}} character(s)",
-    "password_confirm": "Confirm your password",
+
+    "full_name_required": "Full name is required",
     "full_name_less": "Password must be less than {{number}} character(s)",
-    "contains_letter_number": "Password must contain at least {{letter}} letter(s) and {{number}} number(s)"
+
+    "password_contains_letter_number": "Password must contain at least {{letter}} letter(s) and {{number}} number(s)",
+
+    "verification_code_required": "Verification code is required"
   },
-  "other": {
+  "conjunction": {
     "or": "or"
   }
 }
