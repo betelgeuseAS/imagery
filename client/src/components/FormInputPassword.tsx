@@ -39,7 +39,9 @@ const FormInputPassword: FC<IFormInputPasswordProps> = ({ name, label, ...otherP
       name={name}
       render={({ field }) => (
         <FormControl fullWidth variant="outlined" size={otherProps.size} sx={{ my: 1 }}>
-          <InputLabel htmlFor="html-form">{label}</InputLabel>
+          <InputLabel htmlFor="html-form" error={!!errors[name]}>
+            {label}
+          </InputLabel>
 
           <OutlinedInput
             {...field}

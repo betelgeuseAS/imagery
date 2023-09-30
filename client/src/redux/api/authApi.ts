@@ -1,6 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { LoginInput } from '../../pages/login.page'
-import { RegisterInput } from '../../pages/register.page'
+import { LoginInput, RegisterInput } from '../../pages'
 import customFetchBase from './customFetchBase'
 import { GenericResponse, IResetPasswordRequest } from './types'
 import { userApi } from './userApi'
