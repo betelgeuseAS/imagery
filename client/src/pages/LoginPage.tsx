@@ -116,7 +116,7 @@ export const LoginPage: FC = () => {
             <FormCheckbox name="remember" label={t('auth.log_in_keep')} />
 
             <LinkItem to="/forgot_password">
-              <Typography>{t('auth.forgot_password')}?</Typography>
+              <Typography>{t('auth.log_in_forgot_password')}?</Typography>
             </LinkItem>
           </Box>
 

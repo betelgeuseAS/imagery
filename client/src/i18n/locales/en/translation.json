@@ -5,6 +5,7 @@
     "log_in_keep": "Keep me logged in",
     "log_in_here": "Log In here",
     "back_to_log_in": "Back to Log In",
+    "log_in_forgot_password": "Forgot password",
 
     "sign_up": "Sign Up",
     "sigh_up_label": "Sign up to get started",
@@ -12,16 +13,18 @@
     "new_on_platform": "New on the platform",
     "create_account": "Create an account",
     "already_have_account": "Already have an account",
-    "forgot_password": "Forgot password",
     "retrieve_password": "Retrieve password",
 
-    "reset_password": "Forgot Password",
-    "reset_password_label": "Enter your email address and a password reset link will be sent to you",
-    "reset_password_sent": "A password recovery email has been sent to you",
+    "forgot_password": "Forgot Password",
+    "forgot_password_label": "Enter your email address and a password reset link will be sent to you",
+    "forgot_password_sent": "A password recovery email has been sent to you",
 
     "verification": "Verify Email Address",
     "verification_label": "Enter the code that was sent to you",
-    "verify_email": "Verify email"
+    "verify_email": "Verify email",
+
+    "reset_password": "Reset Password",
+    "reset_password_label": "Please enter a new password"
   },
   "forms": {
     "email": "Email",
