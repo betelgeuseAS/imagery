@@ -9,13 +9,14 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
+import { i18nType } from '../types'
 import i18next from '../i18n/config'
 import { useVerifyEmailMutation } from '../redux/api/authApi'
 
 import FormInput from '../components/FormInput'
 
 const verificationCodeSchema = object({
-  verificationCode: string().min(1, i18next.t('validation.verification_code_required'))
+  verificationCode: string().min(1, i18next.t('validation.verification_code_required' as any) as string)
 })
 
 export type VerificationCodeInput = TypeOf<typeof verificationCodeSchema>
@@ -23,7 +24,7 @@ export type VerificationCodeInput = TypeOf<typeof verificationCodeSchema>
 export const EmailVerificationPage: FC = () => {
   const { verificationCode } = useParams()
 
-  const { t } = useTranslation()
+  const { t }: i18nType = useTranslation()
 
   const methods = useForm<VerificationCodeInput>({
     resolver: zodResolver(verificationCodeSchema)

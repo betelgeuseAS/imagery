@@ -2,7 +2,7 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import { z } from 'zod'
-import { makeZodI18nMap, zodI18nMap } from 'zod-i18n-map'
+import { makeZodI18nMap } from 'zod-i18n-map'
 import translationZodEnglish from 'zod-i18n-map/locales/en/zod.json'
 import translationZodUkrainian from 'zod-i18n-map/locales/uk-UA/zod.json'
 

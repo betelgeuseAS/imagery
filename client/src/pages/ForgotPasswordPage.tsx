@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
+import { i18nType } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import { useForgotPasswordMutation } from '../redux/api/authApi'
@@ -17,7 +18,9 @@ import { useTranslation } from 'react-i18next'
 import FormInput from '../components/FormInput'
 
 const forgotPasswordSchema = object({
-  email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid'))
+  email: string()
+    .min(1, i18next.t('validation.email_required' as any) as string)
+    .email(i18next.t('validation.email_invalid' as any) as string)
 })
 
 export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>
@@ -27,7 +30,7 @@ export const ForgotPasswordPage = () => {
 
   const { LinkItem } = createComponents(themeMode)
 
-  const { t } = useTranslation()
+  const { t }: i18nType = useTranslation()
 
   const methods = useForm<ForgotPasswordInput>({
     resolver: zodResolver(forgotPasswordSchema)

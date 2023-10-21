@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
+import { i18nType } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import { createComponents } from '../mui'
@@ -19,18 +20,22 @@ import FormInput from '../components/FormInput'
 import FormInputPassword from '../components/FormInputPassword'
 
 const registerSchema = object({
-  name: string().min(1, i18next.t('validation.full_name_required')).max(100, i18next.t('validation.full_name_less')),
-  email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
+  name: string()
+    .min(1, i18next.t('validation.full_name_required' as any) as string)
+    .max(100, i18next.t('validation.full_name_less' as any) as string),
+  email: string()
+    .min(1, i18next.t('validation.email_required' as any) as string)
+    .email(i18next.t('validation.email_invalid' as any) as string),
   password: string()
-    .min(1, i18next.t('validation.password_required'))
-    .min(8, i18next.t('validation.password_more', { number: 8 }))
-    .max(32, i18next.t('validation.password_less', { number: 32 }))
-    .regex(/\d/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 }))
-    .regex(/[a-zA-Z]/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 })),
-  passwordConfirm: string().min(1, i18next.t('validation.password_confirm'))
+    .min(1, i18next.t('validation.password_required' as any) as string)
+    .min(8, i18next.t('validation.password_more' as any, { number: 8 } as any) as string)
+    .max(32, i18next.t('validation.password_less' as any, { number: 32 } as any) as string)
+    .refine((value) => /\d/.test(value) && /[a-zA-Z]/.test(value), {
+      params: { i18n: { key: 'validation.password_contains_letter_number', values: { letter: 1, number: 1 } } }
+    }),
+  passwordConfirm: string().min(1, i18next.t('validation.password_confirm' as any) as string)
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ['passwordConfirm'],
-  // message: i18next.t('validation.password_not_match'),
   params: { i18n: 'validation.password_not_match' }
 })
 
@@ -41,7 +46,7 @@ export const RegisterPage: FC = () => {
 
   const { LinkItem } = createComponents(themeMode)
 
-  const { t } = useTranslation()
+  const { t }: i18nType = useTranslation()
 
   const methods = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema)

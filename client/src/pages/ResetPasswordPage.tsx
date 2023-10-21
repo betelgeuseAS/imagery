@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
+import { i18nType } from '../types'
 import i18next from '../i18n/config'
 import { useResetPasswordMutation } from '../redux/api/authApi'
 
@@ -16,12 +17,13 @@ import FormInputPassword from '../components/FormInputPassword'
 
 const resetPasswordSchema = object({
   password: string()
-    .min(1, i18next.t('validation.password_required'))
-    .min(8, i18next.t('validation.password_more', { number: 8 }))
-    .max(32, i18next.t('validation.password_less', { number: 32 }))
-    .regex(/\d/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 }))
-    .regex(/[a-zA-Z]/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 })),
-  passwordConfirm: string().min(1, i18next.t('validation.password_confirm'))
+    .min(1, i18next.t('validation.password_required' as any) as string)
+    .min(8, i18next.t('validation.password_more' as any, { number: 8 } as any) as string)
+    .max(32, i18next.t('validation.password_less' as any, { number: 32 } as any) as string)
+    .refine((value) => /\d/.test(value) && /[a-zA-Z]/.test(value), {
+      params: { i18n: { key: 'validation.password_contains_letter_number', values: { letter: 1, number: 1 } } }
+    }),
+  passwordConfirm: string().min(1, i18next.t('validation.password_confirm' as any) as string)
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ['passwordConfirm'],
   params: { i18n: 'validation.password_not_match' }
@@ -32,7 +34,7 @@ export type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>
 export const ResetPasswordPage = () => {
   const { resetToken } = useParams<{ resetToken: string }>()
 
-  const { t } = useTranslation()
+  const { t }: i18nType = useTranslation()
 
   const methods = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema)

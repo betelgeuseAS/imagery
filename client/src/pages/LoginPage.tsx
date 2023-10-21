@@ -6,11 +6,13 @@ import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { useCookies } from 'react-cookie'
 
 import { Box, Typography, Divider, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
+import { i18nType } from '../types'
 import i18next from '../i18n/config'
 import { RootState } from '../redux/store'
 import { createStyles, createComponents } from '../mui'
@@ -25,13 +27,16 @@ import microsoftSocialImage from '../assets/social/microsoft.png'
 import appleSocialImage from '../assets/social/apple.png'
 
 const loginSchema = object({
-  email: string().min(1, i18next.t('validation.email_required')).email(i18next.t('validation.email_invalid')),
+  email: string()
+    .min(1, i18next.t('validation.email_required' as any) as string)
+    .email(i18next.t('validation.email_invalid' as any) as string),
   password: string()
-    .min(1, i18next.t('validation.password_required'))
-    .min(8, i18next.t('validation.password_more', { number: 8 }))
-    .max(32, i18next.t('validation.password_less', { number: 32 }))
-    .regex(/\d/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 }))
-    .regex(/[a-zA-Z]/, i18next.t('validation.password_contains_letter_number', { letter: 1, number: 1 }))
+    .min(1, i18next.t('validation.password_required' as any) as string)
+    .min(8, i18next.t('validation.password_more' as any, { number: 8 } as any) as string)
+    .max(32, i18next.t('validation.password_less' as any, { number: 32 } as any) as string)
+    .refine((value) => /\d/.test(value) && /[a-zA-Z]/.test(value), {
+      params: { i18n: { key: 'validation.password_contains_letter_number', values: { letter: 1, number: 1 } } }
+    })
 })
 
 export type LoginInput = TypeOf<typeof loginSchema>
@@ -42,7 +47,7 @@ export const LoginPage: FC = () => {
   const styles = createStyles(themeMode)
   const { LinkItem } = createComponents(themeMode)
 
-  const { t } = useTranslation()
+  const { t }: i18nType = useTranslation()
 
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema)
