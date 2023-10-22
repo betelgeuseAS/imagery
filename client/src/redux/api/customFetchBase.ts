@@ -5,7 +5,6 @@ import { logout } from '../features/userSlice'
 
 const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/v1/`
 
-// Create a new mutex
 const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({ baseUrl })
@@ -15,7 +14,6 @@ const customFetchBase: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryEr
   api,
   extraOptions
 ) => {
-  // Wait until the mutex is available without locking it
   await mutex.waitForUnlock()
 
   let result = await baseQuery(args, api, extraOptions)
@@ -28,18 +26,16 @@ const customFetchBase: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryEr
         const refreshResult = await baseQuery({ credentials: 'include', url: 'auth/refresh' }, api, extraOptions)
 
         if (refreshResult.data) {
-          // Retry the initial query
           result = await baseQuery(args, api, extraOptions)
         } else {
           api.dispatch(logout())
+
           window.location.href = '/login'
         }
       } finally {
-        // Release must be called once the mutex should be released again
         release()
       }
     } else {
-      // Wait until the mutex is available without locking it
       await mutex.waitForUnlock()
 
       result = await baseQuery(args, api, extraOptions)
