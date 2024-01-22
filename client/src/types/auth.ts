@@ -1,0 +1,58 @@
+import { typesUser } from '.'
+
+export type IRegisterRequest = Omit<typesUser.IUser, 'id' | 'isEmailVerified' | 'role'>
+
+export type IUserWithoutPassword = Omit<typesUser.IUser, 'password'>
+
+export interface ITokenPayload {
+  token: string
+  expires: string
+}
+
+export interface AccessAndRefreshTokens {
+  access: ITokenPayload
+  refresh: ITokenPayload
+}
+
+export interface ILoginResponse {
+  user: IUserWithoutPassword
+  tokens: AccessAndRefreshTokens
+}
+
+export interface IRegisterResponse {
+  user: IUserWithoutPassword
+  tokens: AccessAndRefreshTokens
+}
+
+export type ILoginRequest = Pick<typesUser.IUser, 'email' | 'password'>
+
+export type AuthState = {
+  user: IUserWithoutPassword | null
+  token: ITokenPayload['token'] | null
+}
+
+export interface ILogoutRequest {
+  refreshToken: ITokenPayload['token']
+}
+
+export interface IUserWithTokens {
+  user: IUserWithoutPassword
+  tokens: AccessAndRefreshTokens
+}
+
+export interface IRefreshTokenRequest {
+  refreshToken: ITokenPayload['token']
+}
+
+export type IForgotPasswordRequest = Pick<typesUser.IUser, 'email'>
+
+export type IResetPasswordRequestBody = Pick<typesUser.IUser, 'password'>
+
+export type IResetPasswordRequestParams = Pick<ITokenPayload, 'token'>
+
+export interface IResetPasswordRequest {
+  body: IResetPasswordRequestBody
+  params: IResetPasswordRequestParams
+}
+
+export type IVerifyEmailRequestParams = Pick<ITokenPayload, 'token'>

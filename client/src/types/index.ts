@@ -1,2 +1,5 @@
-export * from './ui'
-export * from './i18n'
+export * as typesUI from './ui'
+export * as typesI18N from './i18n'
+export * as typesCommon from './common'
+export * as typesAuth from './auth'
+export * as typesUser from './user'
