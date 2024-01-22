@@ -50,6 +50,11 @@
 
     "verification_code_required": "Verification code is required"
   },
+  "not_found": {
+    "page": "Page not Found",
+    "message": "Oops! Looks like you followed a bad link",
+    "action": "Go to homepage"
+  },
   "conjunction": {
     "or": "or"
   }
