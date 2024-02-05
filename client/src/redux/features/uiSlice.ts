@@ -2,12 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { PaletteMode } from '@mui/material'
 
-import { IUIState } from '../../types'
-import { constants } from '../../constants'
+import { typesUI } from '../../types'
 import { localStore } from '../../services'
 
-const initialState: IUIState = {
-  themeMode: (localStore.get('themeMode') || constants.THEME.LIGHT) as PaletteMode
+const initialState: typesUI.IUIState = {
+  themeMode: localStore.getTheme() as PaletteMode
 }
 
 export const uiSlice = createSlice({

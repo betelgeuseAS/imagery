@@ -45,7 +45,8 @@ export const createDesign = (themeMode: PaletteMode) => {
       MuiContainer: {
         styleOverrides: {
           root: {
-            padding: 24
+            padding: 24,
+            minWidth: 960
           }
         }
       }

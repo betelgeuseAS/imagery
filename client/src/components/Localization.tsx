@@ -11,7 +11,7 @@ export const Localization: FC = () => {
 
   const handleChangeLanguage = (event: React.MouseEvent<HTMLElement>, language: string) => {
     i18n.changeLanguage(language)
-    localStore.set('language', language)
+    localStore.setLanguage(language)
   }
 
   return (

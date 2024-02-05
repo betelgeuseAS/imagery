@@ -1,8 +1,8 @@
 import { PaletteMode } from '@mui/material'
 
-import { IStyles } from '../types'
+import { typesUI } from '../types'
 
-export const createStyles = (themeMode?: PaletteMode): IStyles => {
+export const createStyles = (themeMode?: PaletteMode): typesUI.IStyles => {
   return {
     // Flex
     flexBetweenStart: { display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: 1 },

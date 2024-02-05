@@ -20,7 +20,7 @@ export const SwitchTheme: FC = () => {
     ) as PaletteMode
 
     dispatch(toggleTheme(currentTheme))
-    localStore.set('themeMode', currentTheme)
+    localStore.setTheme(currentTheme)
   }
 
   return (

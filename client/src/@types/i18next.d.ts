@@ -1,8 +1,8 @@
-import { i18nResources } from '../types'
+import { typesI18N } from '../types'
 
 declare module 'i18next' {
   interface CustomTypeOptions {
-    resources: typeof i18nResources
+    resources: typeof typesI18N.i18nResources
     returnNull: false
   }
 }

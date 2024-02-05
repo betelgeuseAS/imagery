@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { PaletteMode } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import { IComponents } from '../types'
+import { typesUI } from '../types'
 import { constants } from '../constants'
 
-export const createComponents = (themeMode?: PaletteMode): IComponents => {
+export const createComponents = (themeMode?: PaletteMode): typesUI.IComponents => {
   return {
     LinkItem: styled(Link)`
       text-decoration: underline;
