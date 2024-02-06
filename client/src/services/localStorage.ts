@@ -19,9 +19,6 @@ const tryCallback = (callback: () => void): unknown => {
 }
 
 export const localStore = {
-  setRememberMe: (value: boolean) => tryCallback(() => set(localStoreKeys.REMEMBER_ME, String(value))),
-  getRememberMe: (): boolean => tryCallback(() => get(localStoreKeys.REMEMBER_ME)) === 'true',
-
   setTheme: (value: string) => tryCallback(() => set(localStoreKeys.THEME, value)),
   getTheme: (): string => {
     return tryCallback(() => get(localStoreKeys.THEME)) === constants.THEME.DARK
@@ -39,5 +36,14 @@ export const localStore = {
       default:
         return constants.LANGUAGE.ENGLISH
     }
-  }
+  },
+
+  setAccessToken: (value: string) => tryCallback(() => set(localStoreKeys.ACCESS_TOKEN, value)),
+  getAccessToken: (): string => (tryCallback(() => get(localStoreKeys.ACCESS_TOKEN)) as string) || '',
+
+  setRefreshToken: (value: string) => tryCallback(() => set(localStoreKeys.REFRESH_TOKEN, value)),
+  getRefreshToken: (): string => (tryCallback(() => get(localStoreKeys.REFRESH_TOKEN)) as string) || '',
+
+  setUserId: (value: string) => tryCallback(() => set(localStoreKeys.USER_ID, value)),
+  getUserId: (): string => (tryCallback(() => get(localStoreKeys.USER_ID)) as string) || ''
 }

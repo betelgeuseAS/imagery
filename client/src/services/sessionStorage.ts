@@ -14,4 +14,13 @@ const tryCallback = (callback: () => void): unknown => {
   }
 }
 
-export const sessionStore = {}
+export const sessionStore = {
+  setAccessToken: (value: string) => tryCallback(() => set(sessionStoreKeys.ACCESS_TOKEN, value)),
+  getAccessToken: (): string => (tryCallback(() => get(sessionStoreKeys.ACCESS_TOKEN)) as string) || '',
+
+  setRefreshToken: (value: string) => tryCallback(() => set(sessionStoreKeys.REFRESH_TOKEN, value)),
+  getRefreshToken: (): string => (tryCallback(() => get(sessionStoreKeys.REFRESH_TOKEN)) as string) || '',
+
+  setUserId: (value: string) => tryCallback(() => set(sessionStoreKeys.USER_ID, value)),
+  getUserId: (): string => (tryCallback(() => get(sessionStoreKeys.USER_ID)) as string) || ''
+}
