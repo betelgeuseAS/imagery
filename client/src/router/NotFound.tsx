@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Image } from 'mui-image'
@@ -14,8 +13,9 @@ import { createComponents, createStyles } from '../mui'
 import notFoundImage from '../assets/routes/404.webp'
 
 const NotFound = () => {
-  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
   const { t }: typesI18N.i18nType = useTranslation()
+
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
 
   const styles = createStyles(themeMode)
   const { LinkItem } = createComponents(themeMode)
