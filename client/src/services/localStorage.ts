@@ -1,4 +1,4 @@
-import { localStoreKeys } from '.'
+import { localStoreKeys } from './keys'
 import { constants } from '../constants'
 
 const get = (key: string): string | null => localStorage.getItem(key)
@@ -38,12 +38,24 @@ export const localStore = {
     }
   },
 
+  setRememberMe: (value: boolean) => tryCallback(() => set(localStoreKeys.REMEMBER_ME, String(value))),
+  getRememberMe: (): boolean => tryCallback(() => get(localStoreKeys.REMEMBER_ME)) === 'true',
+
   setAccessToken: (value: string) => tryCallback(() => set(localStoreKeys.ACCESS_TOKEN, value)),
   getAccessToken: (): string => (tryCallback(() => get(localStoreKeys.ACCESS_TOKEN)) as string) || '',
+  removeAccessToken: (): void => {
+    tryCallback(() => remove(localStoreKeys.ACCESS_TOKEN))
+  },
 
   setRefreshToken: (value: string) => tryCallback(() => set(localStoreKeys.REFRESH_TOKEN, value)),
   getRefreshToken: (): string => (tryCallback(() => get(localStoreKeys.REFRESH_TOKEN)) as string) || '',
+  removeRefreshToken: (): void => {
+    tryCallback(() => remove(localStoreKeys.REFRESH_TOKEN))
+  },
 
   setUserId: (value: string) => tryCallback(() => set(localStoreKeys.USER_ID, value)),
-  getUserId: (): string => (tryCallback(() => get(localStoreKeys.USER_ID)) as string) || ''
+  getUserId: (): string => (tryCallback(() => get(localStoreKeys.USER_ID)) as string) || '',
+  removeUserId: (): void => {
+    tryCallback(() => remove(localStoreKeys.USER_ID))
+  }
 }
