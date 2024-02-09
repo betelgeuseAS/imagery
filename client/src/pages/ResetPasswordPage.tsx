@@ -1,17 +1,21 @@
-import { Fragment, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { i18nType } from '../types'
+import { typesI18N } from '../types'
+import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
-import { useResetPasswordMutation } from '../redux/api/authApi'
+import routes from '../router/routes'
+import { useResetPasswordMutation } from '../redux/api/auth.api'
+import { createComponents } from '../mui'
 
 import FormInputPassword from '../components/FormInputPassword'
 
@@ -32,55 +36,33 @@ const resetPasswordSchema = object({
 export type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>
 
 export const ResetPasswordPage = () => {
-  const { resetToken } = useParams<{ resetToken: string }>()
-
-  const { t }: i18nType = useTranslation()
-
+  const { t }: typesI18N.i18nType = useTranslation()
+  const [searchParams] = useSearchParams()
+  // const { resetToken } = useParams<{ resetToken: string }>()
+  const navigate = useNavigate()
   const methods = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema)
   })
 
-  const [resetPassword, { isLoading, isError, error, isSuccess }] = useResetPasswordMutation()
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const { LinkItem } = createComponents(themeMode)
 
-  const navigate = useNavigate()
+  const [ResetUserPassword, { isLoading }] = useResetPasswordMutation()
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful }
-  } = methods
+  const onSubmitHandler: SubmitHandler<ResetPasswordInput> = async (values) => {
+    const token = searchParams.get('token')
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate('/login')
-      toast.success('Password updated successfully, login', {
-        position: 'top-right'
-      })
+    if (!token) {
+      // toast.error('Your token is invalid')
+      return
     }
 
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        ;(error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right'
-          })
-        )
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right'
-        })
-      }
-    }
-  }, [isLoading])
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset()
-    }
-  }, [isSubmitSuccessful])
-
-  const onSubmitHandler: SubmitHandler<ResetPasswordInput> = (values) => {
-    resetPassword({ ...values, resetToken: resetToken! })
+    await ResetUserPassword({ body: { ...values }, params: { token } })
+    // .unwrap()
+    // .then(() => {
+    //   toast('Password reset was successful. Please try logging in again')
+    //   navigate(routes.Login.absolutePath)
+    // })
   }
 
   return (
@@ -95,7 +77,7 @@ export const ResetPasswordPage = () => {
       <FormProvider {...methods}>
         <Box
           component="form"
-          onSubmit={handleSubmit(onSubmitHandler)}
+          onSubmit={methods.handleSubmit(onSubmitHandler)}
           noValidate
           autoComplete="off"
           maxWidth="21rem"
@@ -105,7 +87,7 @@ export const ResetPasswordPage = () => {
 
           <LoadingButton
             variant="contained"
-            sx={{ mt: 1 }}
+            sx={{ mt: 1, mb: 2 }}
             fullWidth
             disableElevation
             type="submit"
@@ -114,6 +96,10 @@ export const ResetPasswordPage = () => {
           </LoadingButton>
         </Box>
       </FormProvider>
+
+      <Typography align="center">
+        <LinkItem to={routes.Login.absolutePath}>{t('auth.back_to_log_in')}</LinkItem>
+      </Typography>
     </Fragment>
   )
 }

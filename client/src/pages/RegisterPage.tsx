@@ -1,20 +1,21 @@
-import { FC, useEffect, Fragment } from 'react'
+import { FC, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { i18nType } from '../types'
+import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import { createComponents } from '../mui'
-import { useRegisterUserMutation } from '../redux/api/authApi'
+import { useRegisterMutation } from '../redux/api/auth.api'
+import { routes } from '../router'
 
 import FormInput from '../components/FormInput'
 import FormInputPassword from '../components/FormInputPassword'
@@ -33,7 +34,9 @@ const registerSchema = object({
     .refine((value) => /\d/.test(value) && /[a-zA-Z]/.test(value), {
       params: { i18n: { key: 'validation.password_contains_letter_number', values: { letter: 1, number: 1 } } }
     }),
-  passwordConfirm: string().min(1, i18next.t('validation.password_confirm' as any) as string)
+  passwordConfirm: string()
+    .min(1, i18next.t('validation.password_confirm' as any) as string)
+    .optional()
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ['passwordConfirm'],
   params: { i18n: 'validation.password_not_match' }
@@ -42,55 +45,35 @@ const registerSchema = object({
 export type RegisterInput = TypeOf<typeof registerSchema>
 
 export const RegisterPage: FC = () => {
-  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const { t }: typesI18N.i18nType = useTranslation()
+  const navigate = useNavigate()
 
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
   const { LinkItem } = createComponents(themeMode)
 
-  const { t }: i18nType = useTranslation()
+  const [registerUser, { isLoading }] = useRegisterMutation()
 
   const methods = useForm<RegisterInput>({
+    defaultValues: {
+      name: 'Admin User',
+      email: 'admin_user@gmail.com',
+      password: 'password123',
+      passwordConfirm: 'password123'
+    },
     resolver: zodResolver(registerSchema)
   })
 
-  const [registerUser, { isLoading, isSuccess, error, isError, data }] = useRegisterUserMutation()
+  const { handleSubmit } = methods
 
-  const navigate = useNavigate()
+  const onSubmitHandler: SubmitHandler<RegisterInput> = async (values) => {
+    delete values.passwordConfirm
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful }
-  } = methods
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(data?.message)
-      navigate('/verify_email')
-    }
-
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        ;(error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right'
-          })
-        )
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right'
-        })
-      }
-    }
-  }, [isLoading])
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset()
-    }
-  }, [isSubmitSuccessful])
-
-  const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-    registerUser(values)
+    await registerUser({ ...values })
+      .unwrap()
+      .then((payload) => {
+        // toast.success('message')
+        navigate(routes.Login.relativePath)
+      })
   }
 
   return (
@@ -116,7 +99,8 @@ export const RegisterPage: FC = () => {
           <FormInputPassword name="passwordConfirm" label={t('forms.confirm_password')} size="small" />
 
           <Typography align="center" sx={{ color: 'text.disabled', mb: 2 }}>
-            {t('auth.already_have_account')}? <LinkItem to="/login">{t('auth.log_in_here')}</LinkItem>
+            {t('auth.already_have_account')}?{' '}
+            <LinkItem to={routes.Login.absolutePath}>{t('auth.log_in_here')}</LinkItem>
           </Typography>
 
           <LoadingButton variant="contained" fullWidth disableElevation type="submit" loading={isLoading}>

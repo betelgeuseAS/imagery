@@ -1,19 +1,20 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { i18nType } from '../types'
+import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
-import { useForgotPasswordMutation } from '../redux/api/authApi'
+import { routes } from '../router'
+import { useForgotPasswordMutation } from '../redux/api/auth.api'
 import { createComponents } from '../mui'
-import { useTranslation } from 'react-i18next'
 
 import FormInput from '../components/FormInput'
 
@@ -26,62 +27,32 @@ const forgotPasswordSchema = object({
 export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>
 
 export const ForgotPasswordPage = () => {
-  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
-
-  const { LinkItem } = createComponents(themeMode)
-
-  const { t }: i18nType = useTranslation()
-
+  const { t }: typesI18N.i18nType = useTranslation()
   const methods = useForm<ForgotPasswordInput>({
     resolver: zodResolver(forgotPasswordSchema)
   })
 
-  const [forgotPassword, { isLoading, isError, error, isSuccess, data }] = useForgotPasswordMutation()
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const { LinkItem } = createComponents(themeMode)
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful }
-  } = methods
+  const [sendForgotPassword, { isLoading, isSuccess }] = useForgotPasswordMutation()
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(data?.message)
-    }
-
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        ;(error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right'
-          })
-        )
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right'
-        })
-      }
-    }
-  }, [isLoading])
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset()
-    }
-  }, [isSubmitSuccessful])
-
-  const onSubmitHandler: SubmitHandler<ForgotPasswordInput> = ({ email }) => {
-    forgotPassword({ email })
+  const onSubmitHandler: SubmitHandler<ForgotPasswordInput> = async ({ email }) => {
+    await sendForgotPassword({ email })
+    // .unwrap()
+    // .then(() => {
+    //   toast.success('message')
+    // })
   }
 
   if (isSuccess) {
     return (
       <Fragment>
-        <Typography align="center" gutterBottom sx={{ color: 'text.disabled' }}>
+        <Typography align="center" gutterBottom sx={{ color: 'text.disabled', mb: 2 }}>
           {t('auth.forgot_password_sent')}
         </Typography>
         <Typography align="center">
-          <LinkItem to="/login">{t('auth.back_to_log_in')}</LinkItem>
+          <LinkItem to={routes.Login.absolutePath}>{t('auth.back_to_log_in')}</LinkItem>
         </Typography>
       </Fragment>
     )
@@ -99,7 +70,7 @@ export const ForgotPasswordPage = () => {
       <FormProvider {...methods}>
         <Box
           component="form"
-          onSubmit={handleSubmit(onSubmitHandler)}
+          onSubmit={methods.handleSubmit(onSubmitHandler)}
           noValidate
           autoComplete="off"
           maxWidth="21rem"
@@ -117,7 +88,7 @@ export const ForgotPasswordPage = () => {
           </LoadingButton>
 
           <Typography align="center">
-            <LinkItem to="/login">{t('auth.back_to_log_in')}</LinkItem>
+            <LinkItem to={routes.Login.absolutePath}>{t('auth.back_to_log_in')}</LinkItem>
           </Typography>
         </Box>
       </FormProvider>

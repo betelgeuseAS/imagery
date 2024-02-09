@@ -1,17 +1,21 @@
-import { FC, Fragment, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { FC, Fragment } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { i18nType } from '../types'
+import { typesI18N } from '../types'
+import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
-import { useVerifyEmailMutation } from '../redux/api/authApi'
+import routes from '../router/routes'
+import { useVerifyEmailMutation } from '../redux/api/auth.api'
+import { createComponents } from '../mui'
 
 import FormInput from '../components/FormInput'
 
@@ -22,59 +26,33 @@ const verificationCodeSchema = object({
 export type VerificationCodeInput = TypeOf<typeof verificationCodeSchema>
 
 export const EmailVerificationPage: FC = () => {
-  const { verificationCode } = useParams()
-
-  const { t }: i18nType = useTranslation()
-
+  const { t }: typesI18N.i18nType = useTranslation()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const methods = useForm<VerificationCodeInput>({
     resolver: zodResolver(verificationCodeSchema)
   })
 
-  const [verifyEmail, { isLoading, isError, error, isSuccess, data }] = useVerifyEmailMutation()
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const { LinkItem } = createComponents(themeMode)
 
-  const navigate = useNavigate()
+  const [verifyUserEmail, { isLoading }] = useVerifyEmailMutation()
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful }
-  } = methods
+  const onSubmitHandler: SubmitHandler<VerificationCodeInput> = async ({ verificationCode }) => {
+    const token = searchParams.get('token')
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(data?.message)
-      navigate('/login')
+    if (!token) {
+      // toast.error('Your token is invalid')
+
+      return
     }
 
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        ;(error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right'
-          })
-        )
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right'
-        })
-      }
-    }
-  }, [isLoading])
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset()
-    }
-  }, [isSubmitSuccessful])
-
-  useEffect(() => {
-    if (verificationCode) {
-      reset({ verificationCode })
-    }
-  }, [])
-
-  const onSubmitHandler: SubmitHandler<VerificationCodeInput> = ({ verificationCode }) => {
-    verifyEmail(verificationCode)
+    await verifyUserEmail({ token })
+    // .unwrap()
+    // .then(() => {
+    //   toast('Your email was successfully verified')
+    //   navigate(routes.Login.absolutePath)
+    // })
   }
 
   return (
@@ -89,7 +67,7 @@ export const EmailVerificationPage: FC = () => {
       <FormProvider {...methods}>
         <Box
           component="form"
-          onSubmit={handleSubmit(onSubmitHandler)}
+          onSubmit={methods.handleSubmit(onSubmitHandler)}
           noValidate
           autoComplete="off"
           maxWidth="21rem"
@@ -102,11 +80,15 @@ export const EmailVerificationPage: FC = () => {
             disableElevation
             type="submit"
             loading={isLoading}
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1, mb: 2 }}>
             {t('auth.verify_email')}
           </LoadingButton>
         </Box>
       </FormProvider>
+
+      <Typography align="center">
+        <LinkItem to={routes.Login.absolutePath}>{t('auth.back_to_log_in')}</LinkItem>
+      </Typography>
     </Fragment>
   )
 }

@@ -1,22 +1,23 @@
-import { FC, useEffect, Fragment } from 'react'
+import { FC, Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { object, string, TypeOf } from 'zod'
+import { object, string, boolean, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import { useCookies } from 'react-cookie'
+import { toast } from 'react-toastify'
 
 import { Box, Typography, Divider, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
-import { i18nType } from '../types'
+import { typesI18N, typesLocation } from '../types'
 import i18next from '../i18n/config'
 import { RootState } from '../redux/store'
 import { createStyles, createComponents } from '../mui'
-import { useLoginUserMutation } from '../redux/api/authApi'
+import { useLoginMutation } from '../redux/api/auth.api'
+import { routes } from '../router'
+import { localStore, sessionStore } from '../services'
 
 import FormInput from '../components/FormInput'
 import FormInputPassword from '../components/FormInputPassword'
@@ -36,65 +37,57 @@ const loginSchema = object({
     .max(32, i18next.t('validation.password_less' as any, { number: 32 } as any) as string)
     .refine((value) => /\d/.test(value) && /[a-zA-Z]/.test(value), {
       params: { i18n: { key: 'validation.password_contains_letter_number', values: { letter: 1, number: 1 } } }
-    })
+    }),
+  remember: boolean()
 })
 
 export type LoginInput = TypeOf<typeof loginSchema>
 
 export const LoginPage: FC = () => {
-  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  localStore.setRememberMe(false)
 
-  const styles = createStyles(themeMode)
-  const { LinkItem } = createComponents(themeMode)
-
-  const { t }: i18nType = useTranslation()
-
-  const methods = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema)
-  })
-
-  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation()
-
+  const { t }: typesI18N.i18nType = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = ((location.state as any)?.from.pathname as string) || '/'
+  const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
+  const styles = createStyles(themeMode)
+  const { LinkItem } = createComponents(themeMode)
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful }
-  } = methods
+  const [loginUser, { isLoading /* , isError, error, isSuccess, data */ }] = useLoginMutation()
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success('You successfully logged in')
-      navigate(from)
-    }
+  const methods = useForm<LoginInput>({
+    defaultValues: {
+      email: 'admin_user@gmail.com',
+      password: 'password123'
+    },
+    resolver: zodResolver(loginSchema)
+  })
 
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        ;(error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right'
-          })
-        )
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right'
-        })
-      }
-    }
-  }, [isLoading])
+  const { handleSubmit /* reset, formState: { isSubmitSuccessful } */ } = methods
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset()
-    }
-  }, [isSubmitSuccessful])
+  const previousLocationState = location.state as typesLocation.LocationState
 
-  const onSubmitHandler: SubmitHandler<LoginInput> = (values) => {
-    loginUser(values)
+  const onSubmitHandler: SubmitHandler<LoginInput> = async (values) => {
+    const { email, password, remember } = values
+
+    localStore.setRememberMe(remember)
+
+    await loginUser({ email, password })
+      .unwrap()
+      .then((payload) => {
+        if (remember) {
+          localStore.setAccessToken(payload.tokens.access.token)
+          localStore.setRefreshToken(payload.tokens.refresh.token)
+          localStore.setUserId(payload.user.id)
+        } else {
+          sessionStore.setAccessToken(payload.tokens.access.token)
+          sessionStore.setRefreshToken(payload.tokens.refresh.token)
+          sessionStore.setUserId(payload.user.id)
+        }
+
+        navigate(previousLocationState?.from.pathname || routes.Dashboard.absolutePath, { replace: true })
+      })
   }
 
   return (
@@ -120,7 +113,7 @@ export const LoginPage: FC = () => {
           <Box sx={styles.flexBetweenCenter}>
             <FormCheckbox name="remember" label={t('auth.log_in_keep')} />
 
-            <LinkItem to="/forgot_password">
+            <LinkItem to={routes.ForgotPassword.absolutePath}>
               <Typography>{t('auth.log_in_forgot_password')}?</Typography>
             </LinkItem>
           </Box>
@@ -130,7 +123,8 @@ export const LoginPage: FC = () => {
           </LoadingButton>
 
           <Typography align="center" sx={{ color: 'text.disabled', my: 2 }}>
-            {t('auth.new_on_platform')}? <LinkItem to="/register">{t('auth.create_account')}</LinkItem>
+            {t('auth.new_on_platform')}?{' '}
+            <LinkItem to={routes.Register.absolutePath}>{t('auth.create_account')}</LinkItem>
           </Typography>
 
           <Box textAlign="center" sx={{ mb: 1 }}>
