@@ -6,14 +6,13 @@ import { Image } from 'mui-image'
 import { Container, Typography, Grid, Box } from '@mui/material'
 
 import { routes } from './'
-import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import { createComponents, createStyles } from '../mui'
 
 import notFoundImage from '../assets/routes/404.webp'
 
 const NotFound = () => {
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
 
   const themeMode = useSelector((state: RootState) => state.uiState.themeMode)
 

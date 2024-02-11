@@ -10,7 +10,6 @@ import { toast } from 'react-toastify'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import routes from '../router/routes'
@@ -36,7 +35,7 @@ const resetPasswordSchema = object({
 export type ResetPasswordInput = TypeOf<typeof resetPasswordSchema>
 
 export const ResetPasswordPage = () => {
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   // const { resetToken } = useParams<{ resetToken: string }>()
   const navigate = useNavigate()

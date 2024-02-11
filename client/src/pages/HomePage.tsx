@@ -4,13 +4,11 @@ import { useTranslation } from 'react-i18next'
 
 import { Box, Typography, Button } from '@mui/material'
 
-import { typesI18N } from '../types'
-
 import { routes } from '../router'
 
 export const HomePage = () => {
   const navigate = useNavigate()
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <Box>

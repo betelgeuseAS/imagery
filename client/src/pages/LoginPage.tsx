@@ -11,7 +11,7 @@ import { Box, Typography, Divider, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Image } from 'mui-image'
 
-import { typesI18N, typesLocation } from '../types'
+import { typesLocation } from '../types'
 import i18next from '../i18n/config'
 import { RootState } from '../redux/store'
 import { createStyles, createComponents } from '../mui'
@@ -46,7 +46,7 @@ export type LoginInput = TypeOf<typeof loginSchema>
 export const LoginPage: FC = () => {
   localStore.setRememberMe(false)
 
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
 

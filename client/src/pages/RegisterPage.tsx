@@ -10,7 +10,6 @@ import { toast } from 'react-toastify'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import { createComponents } from '../mui'
@@ -45,7 +44,7 @@ const registerSchema = object({
 export type RegisterInput = TypeOf<typeof registerSchema>
 
 export const RegisterPage: FC = () => {
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const themeMode = useSelector((state: RootState) => state.uiState.themeMode)

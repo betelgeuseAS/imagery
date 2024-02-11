@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 import { Box, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 
-import { typesI18N } from '../types'
 import { RootState } from '../redux/store'
 import i18next from '../i18n/config'
 import { routes } from '../router'
@@ -27,7 +26,7 @@ const forgotPasswordSchema = object({
 export type ForgotPasswordInput = TypeOf<typeof forgotPasswordSchema>
 
 export const ForgotPasswordPage = () => {
-  const { t }: typesI18N.i18nType = useTranslation()
+  const { t } = useTranslation()
   const methods = useForm<ForgotPasswordInput>({
     resolver: zodResolver(forgotPasswordSchema)
   })
