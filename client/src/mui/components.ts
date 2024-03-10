@@ -8,12 +8,12 @@ import { constants } from '../constants'
 
 export const createComponents = (themeMode?: PaletteMode): typesUI.IComponents => {
   return {
-    LinkItem: styled(Link)`
-      text-decoration: underline;
-      color: ${themeMode === constants.THEME.LIGHT ? '#000000' : '#FFFFFF'};
-      &:hover {
-        text-decoration: underline;
+    LinkItem: styled(Link)({
+      textDecoration: 'underline',
+      color: themeMode === constants.THEME.LIGHT ? '#000000' : '#FFFFFF',
+      '&:hover': {
+        textDecoration: 'underline'
       }
-    `
+    })
   }
 }
