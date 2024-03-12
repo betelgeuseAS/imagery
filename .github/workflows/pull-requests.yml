@@ -1,0 +1,30 @@
+name: Pull request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Project analyses
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run prettier
+        run: npm run prettier
+
+      - name: Run linter
+        run: npm run lint -- -o ./eslint-report.json -f json
+
+      - name: Check test coverage
+        run: npm test -- --coverage

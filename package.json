@@ -33,10 +33,16 @@
     "client:prettier:fix": "npm run prettier:fix --prefix client",
     "electron:prettier:fix": "npm run prettier:fix --prefix electron",
     "prettier:fix": "npm run server:prettier:fix && npm run client:prettier:fix && npm run electron:prettier:fix",
-    "postinstall": "(cd ./electron && npm install) && (cd ./server && npm install) && (cd ../client && npm install)"
+    "server:test": "cd ./server && npm run test",
+    "client:test": "cd ./client && npm run test",
+    "electron:test": "cd ./electron && npm run test",
+    "test": "npm run server:test && npm run client:test && npm run electron:test",
+    "postinstall": "(cd ./electron && npm install) && (cd ./server && npm install) && (cd ../client && npm install)",
+    "prepare": "husky"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "husky": "^9.0.11",
     "npm-run-all": "^4.1.5",
     "wait-on": "^7.2.0"
   }
